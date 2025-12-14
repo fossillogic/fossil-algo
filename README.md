@@ -32,7 +32,7 @@ To get started, ensure you have the following installed:
 
 #### Adding via Meson Git Wrap
 
-To add a git-wrap, place a `.wrap` file in `subprojects` with the Git repo URL and revision, then use `dependency('fossil-algorithm')` in `meson.build` so Meson can fetch and build it automatically.
+To add a git-wrap, place a `.wrap` file in `subprojects` with the Git repo URL and revision, then use `dependency('fossil-algo')` in `meson.build` so Meson can fetch and build it automatically.
 
 #### Integrate the Dependency:
 
@@ -47,7 +47,7 @@ revision = v0.1.1
 dependency_names = fossil-algo
 ```
 
-**Note**: For the best experience, always use the latest releases. Visit the [releases](https://github.com/fossillogic/fossil-algorithm/releases) page for the latest versions.
+**Note**: For the best experience, always use the latest releases. Visit the [releases](https://github.com/fossillogic/fossil-algo/releases) page for the latest versions.
 
 ## Build Configuration Options
 
