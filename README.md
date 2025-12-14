@@ -36,15 +36,15 @@ To add a git-wrap, place a `.wrap` file in `subprojects` with the Git repo URL a
 
 #### Integrate the Dependency:
 
-Add the `fossil-algorithm.wrap` file in your `subprojects` directory and include the following content:
+Add the `fossil-algo.wrap` file in your `subprojects` directory and include the following content:
 
 ```ini
 [wrap-git]
-url = https://github.com/fossillogic/fossil-algorithem.git
-revision = v0.1.0
+url = https://github.com/fossillogic/fossil-algo.git
+revision = v0.1.1
 
 [provide]
-dependency_names = fossil-algorithm
+dependency_names = fossil-algo
 ```
 
 **Note**: For the best experience, always use the latest releases. Visit the [releases](https://github.com/fossillogic/fossil-algorithm/releases) page for the latest versions.
