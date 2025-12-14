@@ -22,8 +22,8 @@
  * Copyright (C) 2014-2025 Fossil Logic. All rights reserved.
  * -----------------------------------------------------------------------------
  */
-#ifndef FOSSIL_ALGORITHM_ML_H
-#define FOSSIL_ALGORITHM_ML_H
+#ifndef FOSSIL_ALGORITHM_LM_H
+#define FOSSIL_ALGORITHM_LM_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -34,144 +34,162 @@ extern "C" {
 #endif
 
 // ======================================================
-// Fossil Algorithm ML — Core Types
+// Fossil Algorithm LM — Core Types
 // ======================================================
 
 /**
- * @brief Opaque ML model handle.
+ * @brief Opaque Jellyfish Grok-based LM handle.
  *
- * The concrete model implementation (linear model, tree, NN, etc.)
- * is hidden from the algorithm interface.
+ * Internals may include tensors, memory graphs, embeddings,
+ * and persistent state, but are hidden from the API.
  */
-typedef struct fossil_ml_model fossil_ml_model_t;
+typedef struct fossil_lm_model fossil_lm_model_t;
 
 /**
- * @brief Opaque dataset handle.
+ * @brief Opaque LM input/output buffer.
  *
- * Allows datasets to be backed by memory, storage, streams,
- * or AI core tensors.
+ * May represent text, tokens, embeddings, or structured data.
  */
-typedef struct fossil_ml_dataset fossil_ml_dataset_t;
+typedef struct fossil_lm_buffer fossil_lm_buffer_t;
 
 /**
- * @brief Training phase identifier.
+ * @brief LM execution role identifier.
+ *
+ * Identified by string IDs at runtime.
+ *
+ * Typical role IDs:
+ *   - "ingest"     (feed new data)
+ *   - "learn"      (update internal model)
+ *   - "infer"      (generate output)
+ *   - "reflect"    (self-analysis / grok refinement)
+ *   - "summarize"
  */
-typedef enum fossil_ml_phase {
-    FOSSIL_ML_PHASE_TRAIN,
-    FOSSIL_ML_PHASE_EVAL,
-    FOSSIL_ML_PHASE_PREDICT
-} fossil_ml_phase_t;
+typedef const char *fossil_lm_role_id;
 
 /**
- * @brief Metric callback for training and evaluation.
+ * @brief LM metric callback (loss, confidence, entropy, etc.).
  *
- * @param value Metric value (loss, accuracy, etc.)
- * @param step Training step or epoch.
- * @param user User context pointer.
- * @return true to continue, false to stop early.
+ * Used for audit, learning introspection, and convergence control.
  */
-typedef bool (*fossil_ml_metric_fn)(
+typedef bool (*fossil_lm_metric_fn)(
+    const char *metric_id,
     double value,
     size_t step,
     void *user
 );
 
 // ======================================================
-// Fossil Algorithm ML — Exec Interface
+// Fossil Algorithm LM — Exec Interface
 // ======================================================
 
 /**
- * @brief Executes a machine learning algorithm.
+ * @brief Executes a Grok-based LM operation.
  *
- * Supported algorithm identifiers (implementation-defined):
- *   - Supervised: "linear-regression", "logistic-regression",
- *                 "svm", "knn"
- *   - Unsupervised: "kmeans", "dbscan", "pca"
- *   - Tree-based: "decision-tree", "random-forest"
- *   - Neural: "mlp", "cnn", "rnn"
+ * Algorithm identifiers (string-based):
+ *   - "grok-lm"          (general language model)
+ *   - "grok-reason"     (reasoning pass)
+ *   - "grok-reflect"    (self-refinement)
+ *   - "grok-memory"     (memory consolidation)
+ *
+ * Role identifiers (string-based):
+ *   - "ingest"
+ *   - "learn"
+ *   - "infer"
+ *   - "reflect"
+ *   - "audit"
  *
  * Notes:
- * - Training, evaluation, and prediction are unified.
  * - Model state persists across calls.
- * - Dataset format and feature layout are backend-defined.
- * - Some algorithms require labels (training only).
+ * - Buffers may be text, tokens, or embeddings.
+ * - No assumption is made about tokenization strategy.
+ * - Grok core determines internal learning behavior.
  *
  * Return values:
- *   >= 0 : success or algorithm-specific result
- *   -1   : training failed or prediction invalid
- *   -2   : invalid input or incompatible dataset
- *   -3   : unknown or unsupported algorithm
- *   -4   : unsupported phase or configuration
+ *   >= 0 : success or tokens produced
+ *   -1   : execution failed
+ *   -2   : invalid input
+ *   -3   : unsupported algorithm
+ *   -4   : unsupported role
  *
  * Example:
  * @code
- * fossil_algorithm_ml_exec(
+ * fossil_algorithm_lm_exec(
  *     model,
- *     dataset,
- *     "kmeans",
- *     FOSSIL_ML_PHASE_TRAIN,
+ *     "grok-lm",
+ *     "infer",
+ *     input,
+ *     output,
  *     metric_cb,
  *     NULL
  * );
  * @endcode
- *
- * @param model ML model handle.
- * @param dataset Dataset handle.
- * @param algorithm_id Algorithm identifier string.
- * @param phase Training / evaluation / prediction phase.
- * @param metric Optional metric callback.
- * @param user User context pointer.
- * @return int Status or algorithm-specific code.
  */
-int fossil_algorithm_ml_exec(
-    fossil_ml_model_t *model,
-    fossil_ml_dataset_t *dataset,
+int fossil_algorithm_lm_exec(
+    fossil_lm_model_t *model,
     const char *algorithm_id,
-    fossil_ml_phase_t phase,
-    fossil_ml_metric_fn metric,
+    fossil_lm_role_id role_id,
+    fossil_lm_buffer_t *input,
+    fossil_lm_buffer_t *output,
+    fossil_lm_metric_fn metric,
     void *user
 );
 
 // ======================================================
-// Model Lifecycle Utilities
+// Model Lifecycle
 // ======================================================
 
 /**
- * @brief Creates a model instance for a given algorithm.
+ * @brief Creates a Grok-based LM model.
  *
- * @param algorithm_id Algorithm identifier string.
- * @return fossil_ml_model_t* Model handle or NULL on failure.
+ * @param algorithm_id Algorithm identifier ("grok-lm", etc.)
+ * @return Model handle or NULL on failure.
  */
-fossil_ml_model_t *fossil_algorithm_ml_model_create(
+fossil_lm_model_t *fossil_algorithm_lm_model_create(
     const char *algorithm_id
 );
 
 /**
- * @brief Destroys a model and releases resources.
+ * @brief Destroys an LM model and releases all resources.
  */
-void fossil_algorithm_ml_model_destroy(
-    fossil_ml_model_t *model
+void fossil_algorithm_lm_model_destroy(
+    fossil_lm_model_t *model
 );
 
 // ======================================================
-// Extended Utility API
+// Buffer Utilities
 // ======================================================
 
 /**
- * @brief Checks whether an ML algorithm is supported.
- *
- * @param algorithm_id Algorithm identifier.
- * @return true if supported.
+ * @brief Creates an LM buffer from raw memory.
  */
-bool fossil_algorithm_ml_supported(const char *algorithm_id);
+fossil_lm_buffer_t *fossil_algorithm_lm_buffer_create(
+    void *data,
+    size_t size
+);
 
 /**
- * @brief Checks whether an algorithm requires labels.
- *
- * @param algorithm_id Algorithm identifier.
- * @return true if labels are required.
+ * @brief Destroys an LM buffer.
  */
-bool fossil_algorithm_ml_requires_labels(const char *algorithm_id);
+void fossil_algorithm_lm_buffer_destroy(
+    fossil_lm_buffer_t *buffer
+);
+
+// ======================================================
+// Utility API
+// ======================================================
+
+/**
+ * @brief Checks whether an LM algorithm is supported.
+ */
+bool fossil_algorithm_lm_supported(const char *algorithm_id);
+
+/**
+ * @brief Checks whether a role is supported by an algorithm.
+ */
+bool fossil_algorithm_lm_role_supported(
+    const char *algorithm_id,
+    fossil_lm_role_id role_id
+);
 
 #ifdef __cplusplus
 }
@@ -182,70 +200,49 @@ namespace fossil {
     namespace algorithm {
     
     /**
-     * @brief RAII-friendly C++ wrapper for Fossil ML algorithms.
+     * @brief RAII-friendly C++ wrapper for Jellyfish Grok LM.
      */
-    class ML
+    class LM
     {
     public:
-        /**
-         * @brief Create a model for an algorithm.
-         */
-        static fossil_ml_model_t *create(
+        static fossil_lm_model_t *create(
             const std::string &algorithm_id
         ) {
-            return fossil_algorithm_ml_model_create(
+            return fossil_algorithm_lm_model_create(
                 algorithm_id.c_str()
             );
         }
     
-        /**
-         * @brief Destroy a model.
-         */
         static void destroy(
-            fossil_ml_model_t *model
+            fossil_lm_model_t *model
         ) {
-            fossil_algorithm_ml_model_destroy(model);
+            fossil_algorithm_lm_model_destroy(model);
         }
     
-        /**
-         * @brief Execute an ML algorithm phase.
-         */
         static int exec(
-            fossil_ml_model_t *model,
-            fossil_ml_dataset fossil_ml_dataset_t *dataset,
+            fossil_lm_model_t *model,
             const std::string &algorithm_id,
-            fossil_ml_phase_t phase,
-            fossil_ml_metric_fn metric = nullptr,
+            const std::string &role_id,
+            fossil_lm_buffer_t *input,
+            fossil_lm_buffer_t *output,
+            fossil_lm_metric_fn metric = nullptr,
             void *user = nullptr
         ) {
-            return fossil_algorithm_ml_exec(
+            return fossil_algorithm_lm_exec(
                 model,
-                dataset,
                 algorithm_id.c_str(),
-                phase,
+                role_id.c_str(),
+                input,
+                output,
                 metric,
                 user
             );
         }
     
-        /**
-         * @brief Checks algorithm support.
-         */
         static bool supported(
             const std::string &algorithm_id
         ) {
-            return fossil_algorithm_ml_supported(
-                algorithm_id.c_str()
-            );
-        }
-    
-        /**
-         * @brief Checks label requirement.
-         */
-        static bool requires_labels(
-            const std::string &algorithm_id
-        ) {
-            return fossil_algorithm_ml_requires_labels(
+            return fossil_algorithm_lm_supported(
                 algorithm_id.c_str()
             );
         }
@@ -256,4 +253,4 @@ namespace fossil {
 
 #endif /* __cplusplus */
 
-#endif /* FOSSIL_ALGORITHM_ML_H */
+#endif /* FOSSIL_ALGORITHM_LM_H */
