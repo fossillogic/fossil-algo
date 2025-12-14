@@ -28,6 +28,7 @@
 #include "cstring.h"
 #include "shuffle.h"
 #include "search.h"
+#include "dynamic.h"
 #include "graph.h"
 #include "sort.h"
 
