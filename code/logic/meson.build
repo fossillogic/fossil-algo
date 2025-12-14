@@ -10,6 +10,7 @@ fossil_algorithm_lib = library('fossil_algo',
     files(
         'sort.c',
         'search.c',
+        'cstring.c',
         'shuffle.c',
         'graph.c',
         'lm.c'
