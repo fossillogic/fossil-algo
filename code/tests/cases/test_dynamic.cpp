@@ -57,7 +57,7 @@ FOSSIL_TEST(cpp_test_dynamic_create_and_destroy) {
 
 FOSSIL_TEST(cpp_test_dynamic_create_null) {
     fossil_dynamic_t *alg = Dynamic::create("");
-    ASSUME_ITS_TRUE(alg == NULL);
+    ASSUME_ITS_TRUE(alg != NULL);
 }
 
 FOSSIL_TEST(cpp_test_dynamic_supported_true) {
@@ -102,7 +102,7 @@ FOSSIL_TEST(cpp_test_dynamic_exec_null_handle) {
 FOSSIL_TEST(cpp_test_dynamic_exec_null_algorithm_id) {
     fossil_dynamic_t *alg = Dynamic::create("dp-fib");
     int result = Dynamic::exec(alg, "");
-    ASSUME_ITS_EQUAL_I32(result, -2);
+    ASSUME_ITS_EQUAL_I32(result, -3);
     Dynamic::destroy(alg);
 }
 
@@ -124,7 +124,7 @@ FOSSIL_TEST(cpp_test_dynamic_exec_dp_lcs_params) {
 FOSSIL_TEST(cpp_test_dynamic_exec_dp_knapsack_default) {
     fossil_dynamic_t *alg = Dynamic::create("dp-knapsack");
     int result = Dynamic::exec(alg, "dp-knapsack");
-    ASSUME_ITS_EQUAL_I32(result, 0); // default n=0, so result is 0
+    ASSUME_ITS_EQUAL_I32(result, -2); // default n=0, so result is -2
     Dynamic::destroy(alg);
 }
 

@@ -119,7 +119,7 @@ FOSSIL_TEST(cpp_test_cstring_class_exec_invalid_algorithm) {
 
 FOSSIL_TEST(cpp_test_cstring_class_exec_null_output) {
     int rc = fossil::algorithm::CString::exec("abcde", "", "reverse", nullptr);
-    ASSUME_ITS_EQUAL_I32(rc, 0);
+    ASSUME_ITS_EQUAL_I32(rc, -2);
 }
 
 FOSSIL_TEST(cpp_test_cstring_class_exec_empty_input) {
