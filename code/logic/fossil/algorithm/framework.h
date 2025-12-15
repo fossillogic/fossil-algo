@@ -25,8 +25,11 @@
 #ifndef FOSSIL_ALGORITHM_FRAMEWORK_H
 #define FOSSIL_ALGORITHM_FRAMEWORK_H
 
+#include "cstring.h"
 #include "shuffle.h"
 #include "search.h"
+#include "dynamic.h"
+#include "graph.h"
 #include "sort.h"
 
 #endif /* FOSSIL_ALGORITHM_FRAMEWORK_H */

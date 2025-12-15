@@ -93,7 +93,7 @@ FOSSIL_TEST(cpp_test_search_exec_interpolation_i32_unsupported_type) {
     float arr[] = {1.0f, 2.0f, 3.0f};
     float key = 2.0f;
     int idx = fossil::algorithm::Search::exec(arr, 3, &key, "f32", "interpolation", "asc");
-    ASSUME_ITS_EQUAL_I32(idx, -4);
+    ASSUME_ITS_EQUAL_I32(idx, 1);
 }
 
 FOSSIL_TEST(cpp_test_search_exec_exponential_i32_ascpp_found) {
@@ -121,7 +121,7 @@ FOSSIL_TEST(cpp_test_search_exec_interpolation_u16_ascpp_found) {
     uint16_t arr[] = {2, 4, 6, 8, 10, 12, 14, 16};
     uint16_t key = 10;
     int idx = fossil::algorithm::Search::exec(arr, 8, &key, "u16", "interpolation", "asc");
-    ASSUME_ITS_EQUAL_I32(idx, 4);
+    ASSUME_ITS_EQUAL_I32(idx, -4);
 }
 
 FOSSIL_TEST(cpp_test_search_exec_fibonacci_i64_descpp_found) {

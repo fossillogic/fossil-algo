@@ -6,11 +6,14 @@ dep = [
     dependency('threads', required : false)
 ]
 
-fossil_algorithm_lib = library('fossil_algorithm',
+fossil_algorithm_lib = library('fossil_algo',
     files(
         'sort.c',
         'search.c',
-        'shuffle.c'
+        'cstring.c',
+        'shuffle.c',
+        'graph.c',
+        'dynamic.c'
         ),
     install: true,
     dependencies: dep,
@@ -22,4 +25,4 @@ fossil_algorithm_dep = declare_dependency(
     dependencies: dep,
     include_directories: dir)
 
-meson.override_dependency('fossil-algorithm', fossil_algorithm_dep)
+meson.override_dependency('fossil-algo', fossil_algorithm_dep)
