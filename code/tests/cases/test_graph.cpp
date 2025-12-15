@@ -85,7 +85,7 @@ FOSSIL_TEST(cpp_test_graph_exec_invalid_inputs) {
     int rc = Graph::exec(nullptr, "bfs", 0, 0, nullptr, nullptr);
     ASSUME_ITS_EQUAL_I32(rc, -2);
 
-    fossil_graph_t dummy = {0};
+    fossil_graph_t dummy = {.node_count = 0, .directed = false, .weighted = false, .adj = nullptr};
     rc = Graph::exec(&dummy, "", 0, 0, nullptr, nullptr);
     ASSUME_ITS_EQUAL_I32(rc, -2);
 
@@ -94,7 +94,7 @@ FOSSIL_TEST(cpp_test_graph_exec_invalid_inputs) {
 }
 
 FOSSIL_TEST(cpp_test_graph_exec_unsupported_algorithm) {
-    fossil_graph_t dummy = {0};
+    fossil_graph_t dummy = {.node_count = 0, .directed = false, .weighted = false, .adj = nullptr};
     int rc = Graph::exec(&dummy, "mst-kruskal", 0, 0, nullptr, nullptr);
     ASSUME_ITS_EQUAL_I32(rc, -3);
 }

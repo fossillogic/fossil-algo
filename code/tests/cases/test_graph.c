@@ -83,7 +83,7 @@ FOSSIL_TEST(c_test_graph_exec_invalid_inputs) {
     int rc = fossil_algorithm_graph_exec(NULL, "bfs", 0, 0, NULL, NULL);
     ASSUME_ITS_EQUAL_I32(rc, -2);
 
-    fossil_graph_t dummy = {0};
+    fossil_graph_t dummy = {.node_count = 0, .directed = false, .weighted = false, .adj = NULL};
     rc = fossil_algorithm_graph_exec(&dummy, NULL, 0, 0, NULL, NULL);
     ASSUME_ITS_EQUAL_I32(rc, -2);
 
@@ -92,7 +92,7 @@ FOSSIL_TEST(c_test_graph_exec_invalid_inputs) {
 }
 
 FOSSIL_TEST(c_test_graph_exec_unsupported_algorithm) {
-    fossil_graph_t dummy = {0};
+    fossil_graph_t dummy = {.node_count = 0, .directed = false, .weighted = false, .adj = NULL};
     int rc = fossil_algorithm_graph_exec(&dummy, "mst-kruskal", 0, 0, NULL, NULL);
     ASSUME_ITS_EQUAL_I32(rc, -3);
 }
