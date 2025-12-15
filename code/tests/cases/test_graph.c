@@ -57,6 +57,7 @@ typedef struct fossil_graph {
 
 // Dummy visitor that records visited nodes
 static bool test_visitor(uint64_t node_id, void *user) {
+    (void)node_id; // Mark node_id as used to avoid unused parameter warning
     size_t *count = (size_t *)user;
     (*count)++;
     return true;
