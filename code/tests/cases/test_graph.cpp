@@ -114,7 +114,7 @@ FOSSIL_TEST(cpp_test_graph_exec_invalid_node_ids) {
 }
 
 FOSSIL_TEST(cpp_test_graph_exec_bfs_and_dfs_empty_graph) {
-    fossil_graph_t dummy = {.node_count = 0};
+    fossil_graph_t dummy = {.node_count = 0, .directed = false, .weighted = false, .adj = nullptr};
     int rc = Graph::exec(&dummy, "bfs", 0, 0, nullptr, nullptr);
     ASSUME_ITS_EQUAL_I32(rc, -2);
     rc = Graph::exec(&dummy, "dfs", 0, 0, nullptr, nullptr);
@@ -122,7 +122,7 @@ FOSSIL_TEST(cpp_test_graph_exec_bfs_and_dfs_empty_graph) {
 }
 
 FOSSIL_TEST(cpp_test_graph_exec_bfs_and_dfs_null_visitor) {
-    fossil_graph_t dummy = {.node_count = 1};
+    fossil_graph_t dummy = {.node_count = 1, .directed = false, .weighted = false, .adj = nullptr};
     int rc = Graph::exec(&dummy, "bfs", 0, 0, nullptr, nullptr);
     ASSUME_ITS_EQUAL_I32(rc, 0);
     rc = Graph::exec(&dummy, "dfs", 0, 0, nullptr, nullptr);
@@ -130,7 +130,7 @@ FOSSIL_TEST(cpp_test_graph_exec_bfs_and_dfs_null_visitor) {
 }
 
 FOSSIL_TEST(cpp_test_graph_exec_bfs_and_dfs_with_visitor) {
-    fossil_graph_t dummy = {.node_count = 1};
+    fossil_graph_t dummy = {.node_count = 1, .directed = false, .weighted = false, .adj = nullptr};
     size_t count = 0;
     int rc = Graph::exec(&dummy, "bfs", 0, 0, cpp_test_visitor, &count);
     ASSUME_ITS_EQUAL_I32(rc, 0);
