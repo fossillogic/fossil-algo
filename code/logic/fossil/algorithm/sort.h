@@ -85,7 +85,7 @@ int fossil_algorithm_sort_exec(
 );
 
 // ======================================================
-// Extended Utility API (optional future additions)
+// Extended Utility API
 // ======================================================
 
 /**
