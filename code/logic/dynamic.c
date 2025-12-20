@@ -119,7 +119,6 @@ int fossil_algorithm_dynamic_exec(
     if (!alg || !algorithm_id) return -2;
     if (!str_eq(alg->algorithm, algorithm_id)) return -3;
 
-    // Example param parsing for dp-fib
     if (str_eq(algorithm_id, "dp-fib")) {
         int n = 10; // default
         for (size_t i = 0; i < param_count; i++) {
