@@ -89,7 +89,7 @@ int fossil_algorithm_search_exec(
 );
 
 // ======================================================
-// Extended Utility API (optional future additions)
+// Extended Utility API
 // ======================================================
 
 /**
