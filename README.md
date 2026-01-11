@@ -41,7 +41,7 @@ Add the `fossil-algo.wrap` file in your `subprojects` directory and include the 
 ```ini
 [wrap-git]
 url = https://github.com/fossillogic/fossil-algo.git
-revision = v0.1.1
+revision = v0.1.2
 
 [provide]
 dependency_names = fossil-algo
