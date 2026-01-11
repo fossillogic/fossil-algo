@@ -45,10 +45,6 @@
  * | Extended    | "hex", "oct", "bin", "size", "datetime", "duration" |
  * | Generic     | "any", "null"                 |
  */
-#define FOSSIL_SORT_SUPPORTED_TYPE_IDS \
-    "i8, i16, i32, i64, u8, u16, u32, u64, " \
-    "f32, f64, cstr, char, bool, " \
-    "hex, oct, bin, size, datetime, duration, any, null"
 
 /**
  * @brief Supported algorithm identifiers for @ref fossil_algorithm_sort_exec.
@@ -64,8 +60,6 @@
  * | "counting" | Counting sort (integer range keys only)   |
  * | "bubble"   | Bubble sort (testing/educational only)    |
  */
-#define FOSSIL_SORT_SUPPORTED_ALGO_IDS \
-    "auto, merge, heap, insertion, shell, radix, counting, bubble"
 
 /**
  * @brief Supported order identifiers for @ref fossil_algorithm_sort_exec.
@@ -73,7 +67,6 @@
  * - "asc"  → ascending order (default)
  * - "desc" → descending order
  */
-#define FOSSIL_SORT_SUPPORTED_ORDER_IDS "asc, desc"
 
 // ======================================================
 // Local helpers
@@ -543,7 +536,7 @@ static int fossil_sort_radix_stub(
 }
 
 // ======================================================
-// Algorithm dispatch (all algorithms implemented as stubs)
+// Algorithm dispatch
 // ======================================================
 
 int fossil_algorithm_sort_exec(
@@ -556,42 +549,65 @@ int fossil_algorithm_sort_exec(
     if (!base || count == 0 || !type_id)
         return -1; // invalid input
 
-    bool desc = false;
-    if (order_id && strcmp(order_id, "desc") == 0)
-        desc = true;
-
+    bool desc = (order_id && strcmp(order_id, "desc") == 0);
     size_t type_size = fossil_algorithm_sort_type_sizeof(type_id);
     if (type_size == 0)
         return -2; // unknown type
 
     fossil_sort_compare_fn cmp = fossil_sort_select_comparator(type_id);
     if (!cmp)
-        return -2;
+        return -2; // unknown comparator
 
-    // Dispatch to algorithm
-    if (!algorithm_id || !strcmp(algorithm_id, "auto"))
-    {
+    // -----------------------------
+    // AI-inspired auto selection
+    // -----------------------------
+    if (!algorithm_id || strcmp(algorithm_id, "auto") == 0) {
+        // Small arrays → insertion sort
+        if (count < 32) {
+            return fossil_sort_insertion_stub(base, count, type_size, cmp, desc);
+        }
+
+        // Integer types with small range → counting sort
+        if (!strcmp(type_id, "u8") || !strcmp(type_id, "i8")) {
+            return fossil_sort_counting_stub(base, count, type_size, cmp, desc);
+        }
+
+        // Integer 32-bit with moderate size → radix sort
+        if (!strcmp(type_id, "u32") || !strcmp(type_id, "i32")) {
+            return fossil_sort_radix_stub(base, count, type_size, cmp, desc);
+        }
+
+        // Floating types → merge sort (stable, generic)
+        if (!strcmp(type_id, "f32") || !strcmp(type_id, "f64")) {
+            return fossil_sort_merge_stub(base, count, type_size, cmp, desc);
+        }
+
+        // Default → merge sort (stable, general-purpose)
         return fossil_sort_merge_stub(base, count, type_size, cmp, desc);
     }
-    else if (!strcmp(algorithm_id, "merge")) {
+
+    // -----------------------------
+    // Explicit algorithm dispatch
+    // -----------------------------
+    if (!strcmp(algorithm_id, "merge")) {
         return fossil_sort_merge_stub(base, count, type_size, cmp, desc);
     }
-    else if (!strcmp(algorithm_id, "heap")) {
+    if (!strcmp(algorithm_id, "heap")) {
         return fossil_sort_heap_stub(base, count, type_size, cmp, desc);
     }
-    else if (!strcmp(algorithm_id, "insertion")) {
+    if (!strcmp(algorithm_id, "insertion")) {
         return fossil_sort_insertion_stub(base, count, type_size, cmp, desc);
     }
-    else if (!strcmp(algorithm_id, "shell")) {
+    if (!strcmp(algorithm_id, "shell")) {
         return fossil_sort_shell_stub(base, count, type_size, cmp, desc);
     }
-    else if (!strcmp(algorithm_id, "bubble")) {
+    if (!strcmp(algorithm_id, "bubble")) {
         return fossil_sort_bubble_stub(base, count, type_size, cmp, desc);
     }
-    else if (!strcmp(algorithm_id, "counting")) {
+    if (!strcmp(algorithm_id, "counting")) {
         return fossil_sort_counting_stub(base, count, type_size, cmp, desc);
     }
-    else if (!strcmp(algorithm_id, "radix")) {
+    if (!strcmp(algorithm_id, "radix")) {
         return fossil_sort_radix_stub(base, count, type_size, cmp, desc);
     }
 
