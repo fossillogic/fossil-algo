@@ -148,19 +148,19 @@ FOSSIL_TEST(cpp_test_sort_exec_reverse_sorted_desc) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(cpp_sort_tests) {
-    FOSSIL_TEST_ADD(cpp_algorithm_sort_fixture, cpp_test_sort_exec_i32_merge_desc);
-    FOSSIL_TEST_ADD(cpp_algorithm_sort_fixture, cpp_test_sort_exec_f64_heap_asc);
-    FOSSIL_TEST_ADD(cpp_algorithm_sort_fixture, cpp_test_sort_exec_cstr_insertion_desc);
-    FOSSIL_TEST_ADD(cpp_algorithm_sort_fixture, cpp_test_sort_exec_u8_counting_asc);
-    FOSSIL_TEST_ADD(cpp_algorithm_sort_fixture, cpp_test_sort_exec_u32_radix_desc);
-    FOSSIL_TEST_ADD(cpp_algorithm_sort_fixture, cpp_test_sort_exec_char_shell_asc);
-    FOSSIL_TEST_ADD(cpp_algorithm_sort_fixture, cpp_test_sort_exec_bool_bubble_desc);
-    FOSSIL_TEST_ADD(cpp_algorithm_sort_fixture, cpp_test_sort_exec_invalid_algorithm);
-    FOSSIL_TEST_ADD(cpp_algorithm_sort_fixture, cpp_test_sort_type_sizeof_supported);
-    FOSSIL_TEST_ADD(cpp_algorithm_sort_fixture, cpp_test_sort_type_supported_true_false);
-    FOSSIL_TEST_ADD(cpp_algorithm_sort_fixture, cpp_test_sort_exec_f32_merge_desc);
-    FOSSIL_TEST_ADD(cpp_algorithm_sort_fixture, cpp_test_sort_exec_already_sorted_asc);
-    FOSSIL_TEST_ADD(cpp_algorithm_sort_fixture, cpp_test_sort_exec_reverse_sorted_desc);
+    FOSSIL_ADD_TEST(cpp_algorithm_sort_fixture, cpp_test_sort_exec_i32_merge_desc);
+    FOSSIL_ADD_TEST(cpp_algorithm_sort_fixture, cpp_test_sort_exec_f64_heap_asc);
+    FOSSIL_ADD_TEST(cpp_algorithm_sort_fixture, cpp_test_sort_exec_cstr_insertion_desc);
+    FOSSIL_ADD_TEST(cpp_algorithm_sort_fixture, cpp_test_sort_exec_u8_counting_asc);
+    FOSSIL_ADD_TEST(cpp_algorithm_sort_fixture, cpp_test_sort_exec_u32_radix_desc);
+    FOSSIL_ADD_TEST(cpp_algorithm_sort_fixture, cpp_test_sort_exec_char_shell_asc);
+    FOSSIL_ADD_TEST(cpp_algorithm_sort_fixture, cpp_test_sort_exec_bool_bubble_desc);
+    FOSSIL_ADD_TEST(cpp_algorithm_sort_fixture, cpp_test_sort_exec_invalid_algorithm);
+    FOSSIL_ADD_TEST(cpp_algorithm_sort_fixture, cpp_test_sort_type_sizeof_supported);
+    FOSSIL_ADD_TEST(cpp_algorithm_sort_fixture, cpp_test_sort_type_supported_true_false);
+    FOSSIL_ADD_TEST(cpp_algorithm_sort_fixture, cpp_test_sort_exec_f32_merge_desc);
+    FOSSIL_ADD_TEST(cpp_algorithm_sort_fixture, cpp_test_sort_exec_already_sorted_asc);
+    FOSSIL_ADD_TEST(cpp_algorithm_sort_fixture, cpp_test_sort_exec_reverse_sorted_desc);
 
-    FOSSIL_TEST_REGISTER(cpp_algorithm_sort_fixture);
+    FOSSIL_ADD_SUITE(cpp_algorithm_sort_fixture);
 } // end of tests

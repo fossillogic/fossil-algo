@@ -144,15 +144,15 @@ FOSSIL_TEST(c_test_graph_exec_bfs_and_dfs_with_visitor) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(c_graph_tests) {
-    FOSSIL_TEST_ADD(c_algorithm_graph_fixture, c_test_graph_supported_algorithms);
-    FOSSIL_TEST_ADD(c_algorithm_graph_fixture, c_test_graph_requires_weights);
-    FOSSIL_TEST_ADD(c_algorithm_graph_fixture, c_test_graph_exec_invalid_inputs);
-    FOSSIL_TEST_ADD(c_algorithm_graph_fixture, c_test_graph_exec_unsupported_algorithm);
-    FOSSIL_TEST_ADD(c_algorithm_graph_fixture, c_test_graph_exec_requires_weights_on_unweighted);
-    FOSSIL_TEST_ADD(c_algorithm_graph_fixture, c_test_graph_exec_invalid_node_ids);
-    FOSSIL_TEST_ADD(c_algorithm_graph_fixture, c_test_graph_exec_bfs_and_dfs_empty_graph);
-    FOSSIL_TEST_ADD(c_algorithm_graph_fixture, c_test_graph_exec_bfs_and_dfs_null_visitor);
-    FOSSIL_TEST_ADD(c_algorithm_graph_fixture, c_test_graph_exec_bfs_and_dfs_with_visitor);
+    FOSSIL_ADD_TEST(c_algorithm_graph_fixture, c_test_graph_supported_algorithms);
+    FOSSIL_ADD_TEST(c_algorithm_graph_fixture, c_test_graph_requires_weights);
+    FOSSIL_ADD_TEST(c_algorithm_graph_fixture, c_test_graph_exec_invalid_inputs);
+    FOSSIL_ADD_TEST(c_algorithm_graph_fixture, c_test_graph_exec_unsupported_algorithm);
+    FOSSIL_ADD_TEST(c_algorithm_graph_fixture, c_test_graph_exec_requires_weights_on_unweighted);
+    FOSSIL_ADD_TEST(c_algorithm_graph_fixture, c_test_graph_exec_invalid_node_ids);
+    FOSSIL_ADD_TEST(c_algorithm_graph_fixture, c_test_graph_exec_bfs_and_dfs_empty_graph);
+    FOSSIL_ADD_TEST(c_algorithm_graph_fixture, c_test_graph_exec_bfs_and_dfs_null_visitor);
+    FOSSIL_ADD_TEST(c_algorithm_graph_fixture, c_test_graph_exec_bfs_and_dfs_with_visitor);
 
-    FOSSIL_TEST_REGISTER(c_algorithm_graph_fixture);
+    FOSSIL_ADD_SUITE(c_algorithm_graph_fixture);
 } // end of tests

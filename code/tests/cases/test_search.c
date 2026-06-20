@@ -186,26 +186,26 @@ FOSSIL_TEST(c_test_search_type_supported_true_false) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(c_search_tests) {
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_exec_linear_i32_found);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_exec_linear_i32_not_found);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_exec_binary_f64_asc_found);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_exec_binary_f64_desc_found);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_exec_jump_u8_asc_found);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_exec_interpolation_i32_asc_found);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_exec_interpolation_i32_unsupported_type);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_exec_exponential_i32_asc_found);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_exec_exponential_i32_desc_found);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_exec_exponential_i32_not_found);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_exec_interpolation_u16_asc_found);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_exec_fibonacci_i64_desc_found);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_exec_cstr_linear_found);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_exec_invalid_type);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_exec_invalid_algorithm);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_exec_null_base);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_exec_null_key);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_exec_zero_count);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_type_sizeof_supported);
-    FOSSIL_TEST_ADD(c_algorithm_search_fixture, c_test_search_type_supported_true_false);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_exec_linear_i32_found);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_exec_linear_i32_not_found);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_exec_binary_f64_asc_found);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_exec_binary_f64_desc_found);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_exec_jump_u8_asc_found);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_exec_interpolation_i32_asc_found);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_exec_interpolation_i32_unsupported_type);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_exec_exponential_i32_asc_found);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_exec_exponential_i32_desc_found);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_exec_exponential_i32_not_found);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_exec_interpolation_u16_asc_found);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_exec_fibonacci_i64_desc_found);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_exec_cstr_linear_found);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_exec_invalid_type);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_exec_invalid_algorithm);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_exec_null_base);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_exec_null_key);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_exec_zero_count);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_type_sizeof_supported);
+    FOSSIL_ADD_TEST(c_algorithm_search_fixture, c_test_search_type_supported_true_false);
 
-    FOSSIL_TEST_REGISTER(c_algorithm_search_fixture);
+    FOSSIL_ADD_SUITE(c_algorithm_search_fixture);
 } // end of tests

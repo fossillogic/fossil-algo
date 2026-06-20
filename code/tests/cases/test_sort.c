@@ -164,21 +164,21 @@ FOSSIL_TEST(c_test_sort_exec_datetime_insertion_asc) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(c_sort_tests) {
-    FOSSIL_TEST_ADD(c_algorithm_sort_fixture, c_test_sort_exec_i32_merge_desc);
-    FOSSIL_TEST_ADD(c_algorithm_sort_fixture, c_test_sort_exec_f64_heap_asc);
-    FOSSIL_TEST_ADD(c_algorithm_sort_fixture, c_test_sort_exec_cstr_insertion_desc);
-    FOSSIL_TEST_ADD(c_algorithm_sort_fixture, c_test_sort_exec_u8_counting_asc);
-    FOSSIL_TEST_ADD(c_algorithm_sort_fixture, c_test_sort_exec_u32_radix_desc);
-    FOSSIL_TEST_ADD(c_algorithm_sort_fixture, c_test_sort_exec_char_shell_asc);
-    FOSSIL_TEST_ADD(c_algorithm_sort_fixture, c_test_sort_exec_bool_bubble_desc);
-    FOSSIL_TEST_ADD(c_algorithm_sort_fixture, c_test_sort_exec_invalid_algorithm);
-    FOSSIL_TEST_ADD(c_algorithm_sort_fixture, c_test_sort_type_sizeof_supported);
-    FOSSIL_TEST_ADD(c_algorithm_sort_fixture, c_test_sort_type_supported_true_false);
-    FOSSIL_TEST_ADD(c_algorithm_sort_fixture, c_test_sort_exec_i64_merge_asc);
-    FOSSIL_TEST_ADD(c_algorithm_sort_fixture, c_test_sort_exec_u16_heap_desc);
-    FOSSIL_TEST_ADD(c_algorithm_sort_fixture, c_test_sort_exec_f32_shell_asc);
-    FOSSIL_TEST_ADD(c_algorithm_sort_fixture, c_test_sort_exec_size_bubble_desc);
-    FOSSIL_TEST_ADD(c_algorithm_sort_fixture, c_test_sort_exec_datetime_insertion_asc);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_i32_merge_desc);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_f64_heap_asc);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_cstr_insertion_desc);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_u8_counting_asc);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_u32_radix_desc);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_char_shell_asc);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_bool_bubble_desc);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_invalid_algorithm);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_type_sizeof_supported);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_type_supported_true_false);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_i64_merge_asc);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_u16_heap_desc);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_f32_shell_asc);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_size_bubble_desc);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_datetime_insertion_asc);
 
-    FOSSIL_TEST_REGISTER(c_algorithm_sort_fixture);
+    FOSSIL_ADD_SUITE(c_algorithm_sort_fixture);
 } // end of tests

@@ -186,26 +186,26 @@ FOSSIL_TEST(cpp_test_search_type_supported_true_false) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(cpp_search_tests) {
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_exec_linear_i32_found);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_exec_linear_i32_not_found);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_exec_binary_f64_ascpp_found);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_exec_binary_f64_descpp_found);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_exec_jump_u8_ascpp_found);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_exec_interpolation_i32_ascpp_found);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_exec_interpolation_i32_unsupported_type);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_exec_exponential_i32_ascpp_found);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_exec_exponential_i32_descpp_found);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_exec_exponential_i32_not_found);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_exec_interpolation_u16_ascpp_found);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_exec_fibonacci_i64_descpp_found);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_exec_cstr_linear_found);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_exec_invalid_type);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_exec_invalid_algorithm);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_exec_null_base);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_exec_null_key);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_exec_zero_count);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_type_sizeof_supported);
-    FOSSIL_TEST_ADD(cpp_algorithm_search_fixture, cpp_test_search_type_supported_true_false);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_exec_linear_i32_found);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_exec_linear_i32_not_found);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_exec_binary_f64_ascpp_found);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_exec_binary_f64_descpp_found);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_exec_jump_u8_ascpp_found);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_exec_interpolation_i32_ascpp_found);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_exec_interpolation_i32_unsupported_type);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_exec_exponential_i32_ascpp_found);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_exec_exponential_i32_descpp_found);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_exec_exponential_i32_not_found);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_exec_interpolation_u16_ascpp_found);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_exec_fibonacci_i64_descpp_found);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_exec_cstr_linear_found);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_exec_invalid_type);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_exec_invalid_algorithm);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_exec_null_base);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_exec_null_key);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_exec_zero_count);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_type_sizeof_supported);
+    FOSSIL_ADD_TEST(cpp_algorithm_search_fixture, cpp_test_search_type_supported_true_false);
 
-    FOSSIL_TEST_REGISTER(cpp_algorithm_search_fixture);
+    FOSSIL_ADD_SUITE(cpp_algorithm_search_fixture);
 } // end of tests

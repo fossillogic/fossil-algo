@@ -131,18 +131,18 @@ FOSSIL_TEST(c_test_dynamic_exec_dp_knapsack_default) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(c_dynamic_tests) {
-    FOSSIL_TEST_ADD(c_algorithm_dynamic_fixture, c_test_dynamic_create_and_destroy);
-    FOSSIL_TEST_ADD(c_algorithm_dynamic_fixture, c_test_dynamic_create_null);
-    FOSSIL_TEST_ADD(c_algorithm_dynamic_fixture, c_test_dynamic_supported_true);
-    FOSSIL_TEST_ADD(c_algorithm_dynamic_fixture, c_test_dynamic_supported_false);
-    FOSSIL_TEST_ADD(c_algorithm_dynamic_fixture, c_test_dynamic_exec_dp_fib_default);
-    FOSSIL_TEST_ADD(c_algorithm_dynamic_fixture, c_test_dynamic_exec_dp_fib_param);
-    FOSSIL_TEST_ADD(c_algorithm_dynamic_fixture, c_test_dynamic_exec_dp_fib_invalid_alg);
-    FOSSIL_TEST_ADD(c_algorithm_dynamic_fixture, c_test_dynamic_exec_null_handle);
-    FOSSIL_TEST_ADD(c_algorithm_dynamic_fixture, c_test_dynamic_exec_null_algorithm_id);
-    FOSSIL_TEST_ADD(c_algorithm_dynamic_fixture, c_test_dynamic_exec_dp_lcs_default);
-    FOSSIL_TEST_ADD(c_algorithm_dynamic_fixture, c_test_dynamic_exec_dp_lcs_params);
-    FOSSIL_TEST_ADD(c_algorithm_dynamic_fixture, c_test_dynamic_exec_dp_knapsack_default);
+    FOSSIL_ADD_TEST(c_algorithm_dynamic_fixture, c_test_dynamic_create_and_destroy);
+    FOSSIL_ADD_TEST(c_algorithm_dynamic_fixture, c_test_dynamic_create_null);
+    FOSSIL_ADD_TEST(c_algorithm_dynamic_fixture, c_test_dynamic_supported_true);
+    FOSSIL_ADD_TEST(c_algorithm_dynamic_fixture, c_test_dynamic_supported_false);
+    FOSSIL_ADD_TEST(c_algorithm_dynamic_fixture, c_test_dynamic_exec_dp_fib_default);
+    FOSSIL_ADD_TEST(c_algorithm_dynamic_fixture, c_test_dynamic_exec_dp_fib_param);
+    FOSSIL_ADD_TEST(c_algorithm_dynamic_fixture, c_test_dynamic_exec_dp_fib_invalid_alg);
+    FOSSIL_ADD_TEST(c_algorithm_dynamic_fixture, c_test_dynamic_exec_null_handle);
+    FOSSIL_ADD_TEST(c_algorithm_dynamic_fixture, c_test_dynamic_exec_null_algorithm_id);
+    FOSSIL_ADD_TEST(c_algorithm_dynamic_fixture, c_test_dynamic_exec_dp_lcs_default);
+    FOSSIL_ADD_TEST(c_algorithm_dynamic_fixture, c_test_dynamic_exec_dp_lcs_params);
+    FOSSIL_ADD_TEST(c_algorithm_dynamic_fixture, c_test_dynamic_exec_dp_knapsack_default);
 
-    FOSSIL_TEST_REGISTER(c_algorithm_dynamic_fixture);
+    FOSSIL_ADD_SUITE(c_algorithm_dynamic_fixture);
 } // end of tests
