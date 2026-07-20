@@ -17,12 +17,12 @@
  * under the License.
  *
  * Author: Michael Gene Brockus (Dreamer)
- * Date: 04/05/2014
+ * Date: 04/05/2013
  *
- * Copyright (C) 2014-2025 Fossil Logic. All rights reserved.
+ * Copyright (C) 2013-Current Fossil Logic. All rights reserved.
  * -----------------------------------------------------------------------------
  */
-#include <fossil/pizza/framework.h>
+#include <fossil/maip/framework.h>
 
 #include "fossil/algorithm/framework.h"
 
@@ -137,16 +137,16 @@ FOSSIL_TEST(c_test_shuffle_type_supported_true_false) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(c_shuffle_tests) {
-    FOSSIL_TEST_ADD(c_algorithm_shuffle_fixture, c_test_shuffle_exec_fisher_yates_i32);
-    FOSSIL_TEST_ADD(c_algorithm_shuffle_fixture, c_test_shuffle_exec_inside_out_f64);
-    FOSSIL_TEST_ADD(c_algorithm_shuffle_fixture, c_test_shuffle_exec_auto_u8_seeded);
-    FOSSIL_TEST_ADD(c_algorithm_shuffle_fixture, c_test_shuffle_exec_invalid_type);
-    FOSSIL_TEST_ADD(c_algorithm_shuffle_fixture, c_test_shuffle_exec_invalid_algorithm);
-    FOSSIL_TEST_ADD(c_algorithm_shuffle_fixture, c_test_shuffle_exec_null_base);
-    FOSSIL_TEST_ADD(c_algorithm_shuffle_fixture, c_test_shuffle_exec_zero_count);
-    FOSSIL_TEST_ADD(c_algorithm_shuffle_fixture, c_test_shuffle_exec_null_type_id);
-    FOSSIL_TEST_ADD(c_algorithm_shuffle_fixture, c_test_shuffle_type_sizeof_supported);
-    FOSSIL_TEST_ADD(c_algorithm_shuffle_fixture, c_test_shuffle_type_supported_true_false);
+    FOSSIL_ADD_TEST(c_algorithm_shuffle_fixture, c_test_shuffle_exec_fisher_yates_i32);
+    FOSSIL_ADD_TEST(c_algorithm_shuffle_fixture, c_test_shuffle_exec_inside_out_f64);
+    FOSSIL_ADD_TEST(c_algorithm_shuffle_fixture, c_test_shuffle_exec_auto_u8_seeded);
+    FOSSIL_ADD_TEST(c_algorithm_shuffle_fixture, c_test_shuffle_exec_invalid_type);
+    FOSSIL_ADD_TEST(c_algorithm_shuffle_fixture, c_test_shuffle_exec_invalid_algorithm);
+    FOSSIL_ADD_TEST(c_algorithm_shuffle_fixture, c_test_shuffle_exec_null_base);
+    FOSSIL_ADD_TEST(c_algorithm_shuffle_fixture, c_test_shuffle_exec_zero_count);
+    FOSSIL_ADD_TEST(c_algorithm_shuffle_fixture, c_test_shuffle_exec_null_type_id);
+    FOSSIL_ADD_TEST(c_algorithm_shuffle_fixture, c_test_shuffle_type_sizeof_supported);
+    FOSSIL_ADD_TEST(c_algorithm_shuffle_fixture, c_test_shuffle_type_supported_true_false);
 
-    FOSSIL_TEST_REGISTER(c_algorithm_shuffle_fixture);
+    FOSSIL_ADD_SUITE(c_algorithm_shuffle_fixture);
 } // end of tests

@@ -17,12 +17,12 @@
  * under the License.
  *
  * Author: Michael Gene Brockus (Dreamer)
- * Date: 04/05/2014
+ * Date: 04/05/2013
  *
- * Copyright (C) 2014-2025 Fossil Logic. All rights reserved.
+ * Copyright (C) 2013-Current Fossil Logic. All rights reserved.
  * -----------------------------------------------------------------------------
  */
-#include <fossil/pizza/framework.h>
+#include <fossil/maip/framework.h>
 
 #include "fossil/algorithm/framework.h"
 
@@ -133,18 +133,18 @@ FOSSIL_TEST(cpp_test_dynamic_exec_dp_knapsack_default) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(cpp_dynamic_tests) {
-    FOSSIL_TEST_ADD(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_create_and_destroy);
-    FOSSIL_TEST_ADD(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_create_null);
-    FOSSIL_TEST_ADD(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_supported_true);
-    FOSSIL_TEST_ADD(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_supported_false);
-    FOSSIL_TEST_ADD(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_exec_dp_fib_default);
-    FOSSIL_TEST_ADD(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_exec_dp_fib_param);
-    FOSSIL_TEST_ADD(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_exec_dp_fib_invalid_alg);
-    FOSSIL_TEST_ADD(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_exec_null_handle);
-    FOSSIL_TEST_ADD(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_exec_null_algorithm_id);
-    FOSSIL_TEST_ADD(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_exec_dp_lcs_default);
-    FOSSIL_TEST_ADD(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_exec_dp_lcs_params);
-    FOSSIL_TEST_ADD(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_exec_dp_knapsack_default);
+    FOSSIL_ADD_TEST(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_create_and_destroy);
+    FOSSIL_ADD_TEST(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_create_null);
+    FOSSIL_ADD_TEST(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_supported_true);
+    FOSSIL_ADD_TEST(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_supported_false);
+    FOSSIL_ADD_TEST(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_exec_dp_fib_default);
+    FOSSIL_ADD_TEST(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_exec_dp_fib_param);
+    FOSSIL_ADD_TEST(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_exec_dp_fib_invalid_alg);
+    FOSSIL_ADD_TEST(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_exec_null_handle);
+    FOSSIL_ADD_TEST(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_exec_null_algorithm_id);
+    FOSSIL_ADD_TEST(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_exec_dp_lcs_default);
+    FOSSIL_ADD_TEST(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_exec_dp_lcs_params);
+    FOSSIL_ADD_TEST(cpp_algorithm_dynamic_fixture, cpp_test_dynamic_exec_dp_knapsack_default);
 
-    FOSSIL_TEST_REGISTER(cpp_algorithm_dynamic_fixture);
+    FOSSIL_ADD_SUITE(cpp_algorithm_dynamic_fixture);
 } // end of tests

@@ -17,12 +17,12 @@
  * under the License.
  *
  * Author: Michael Gene Brockus (Dreamer)
- * Date: 04/05/2014
+ * Date: 04/05/2013
  *
- * Copyright (C) 2014-2025 Fossil Logic. All rights reserved.
+ * Copyright (C) 2013-Current Fossil Logic. All rights reserved.
  * -----------------------------------------------------------------------------
  */
-#include <fossil/pizza/framework.h>
+#include <fossil/maip/framework.h>
 
 #include "fossil/algorithm/framework.h"
 
@@ -151,19 +151,19 @@ FOSSIL_TEST(c_test_reduce_exec_custom_null_fn) {
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(c_reduce_tests) {
     // Reduce tests
-    FOSSIL_TEST_ADD(c_algorithm_reduce_fixture, c_test_reduce_exec_i32_sum);
-    FOSSIL_TEST_ADD(c_algorithm_reduce_fixture, c_test_reduce_exec_f64_min);
-    FOSSIL_TEST_ADD(c_algorithm_reduce_fixture, c_test_reduce_exec_u8_max);
-    FOSSIL_TEST_ADD(c_algorithm_reduce_fixture, c_test_reduce_exec_bool_any);
-    FOSSIL_TEST_ADD(c_algorithm_reduce_fixture, c_test_reduce_exec_bool_all);
-    FOSSIL_TEST_ADD(c_algorithm_reduce_fixture, c_test_reduce_exec_count);
-    FOSSIL_TEST_ADD(c_algorithm_reduce_fixture, c_test_reduce_exec_custom_product);
-    FOSSIL_TEST_ADD(c_algorithm_reduce_fixture, c_test_reduce_type_sizeof_supported);
-    FOSSIL_TEST_ADD(c_algorithm_reduce_fixture, c_test_reduce_type_supported_true_false);
-    FOSSIL_TEST_ADD(c_algorithm_reduce_fixture, c_test_reduce_exec_invalid_type);
-    FOSSIL_TEST_ADD(c_algorithm_reduce_fixture, c_test_reduce_exec_invalid_op);
-    FOSSIL_TEST_ADD(c_algorithm_reduce_fixture, c_test_reduce_exec_null_input);
-    FOSSIL_TEST_ADD(c_algorithm_reduce_fixture, c_test_reduce_exec_custom_null_fn);
+    FOSSIL_ADD_TEST(c_algorithm_reduce_fixture, c_test_reduce_exec_i32_sum);
+    FOSSIL_ADD_TEST(c_algorithm_reduce_fixture, c_test_reduce_exec_f64_min);
+    FOSSIL_ADD_TEST(c_algorithm_reduce_fixture, c_test_reduce_exec_u8_max);
+    FOSSIL_ADD_TEST(c_algorithm_reduce_fixture, c_test_reduce_exec_bool_any);
+    FOSSIL_ADD_TEST(c_algorithm_reduce_fixture, c_test_reduce_exec_bool_all);
+    FOSSIL_ADD_TEST(c_algorithm_reduce_fixture, c_test_reduce_exec_count);
+    FOSSIL_ADD_TEST(c_algorithm_reduce_fixture, c_test_reduce_exec_custom_product);
+    FOSSIL_ADD_TEST(c_algorithm_reduce_fixture, c_test_reduce_type_sizeof_supported);
+    FOSSIL_ADD_TEST(c_algorithm_reduce_fixture, c_test_reduce_type_supported_true_false);
+    FOSSIL_ADD_TEST(c_algorithm_reduce_fixture, c_test_reduce_exec_invalid_type);
+    FOSSIL_ADD_TEST(c_algorithm_reduce_fixture, c_test_reduce_exec_invalid_op);
+    FOSSIL_ADD_TEST(c_algorithm_reduce_fixture, c_test_reduce_exec_null_input);
+    FOSSIL_ADD_TEST(c_algorithm_reduce_fixture, c_test_reduce_exec_custom_null_fn);
 
-    FOSSIL_TEST_REGISTER(c_algorithm_reduce_fixture);
+    FOSSIL_ADD_SUITE(c_algorithm_reduce_fixture);
 } // end of tests

@@ -17,12 +17,12 @@
  * under the License.
  *
  * Author: Michael Gene Brockus (Dreamer)
- * Date: 04/05/2014
+ * Date: 04/05/2013
  *
- * Copyright (C) 2014-2025 Fossil Logic. All rights reserved.
+ * Copyright (C) 2013-Current Fossil Logic. All rights reserved.
  * -----------------------------------------------------------------------------
  */
-#include <fossil/pizza/framework.h>
+#include <fossil/maip/framework.h>
 
 #include "fossil/algorithm/framework.h"
 
@@ -143,21 +143,21 @@ FOSSIL_TEST(cpp_test_cstring_class_supported_false) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(cpp_cstring_tests) {
-    FOSSIL_TEST_ADD(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_find_found);
-    FOSSIL_TEST_ADD(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_find_not_found);
-    FOSSIL_TEST_ADD(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_rfind_found);
-    FOSSIL_TEST_ADD(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_count);
-    FOSSIL_TEST_ADD(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_equals_true);
-    FOSSIL_TEST_ADD(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_iequals_false);
-    FOSSIL_TEST_ADD(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_toupper);
-    FOSSIL_TEST_ADD(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_tolower);
-    FOSSIL_TEST_ADD(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_reverse);
-    FOSSIL_TEST_ADD(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_invalid_algorithm);
-    FOSSIL_TEST_ADD(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_null_output);
-    FOSSIL_TEST_ADD(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_empty_input);
-    FOSSIL_TEST_ADD(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_supported_true);
-    FOSSIL_TEST_ADD(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_supported_false);
+    FOSSIL_ADD_TEST(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_find_found);
+    FOSSIL_ADD_TEST(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_find_not_found);
+    FOSSIL_ADD_TEST(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_rfind_found);
+    FOSSIL_ADD_TEST(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_count);
+    FOSSIL_ADD_TEST(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_equals_true);
+    FOSSIL_ADD_TEST(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_iequals_false);
+    FOSSIL_ADD_TEST(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_toupper);
+    FOSSIL_ADD_TEST(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_tolower);
+    FOSSIL_ADD_TEST(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_reverse);
+    FOSSIL_ADD_TEST(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_invalid_algorithm);
+    FOSSIL_ADD_TEST(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_null_output);
+    FOSSIL_ADD_TEST(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_exec_empty_input);
+    FOSSIL_ADD_TEST(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_supported_true);
+    FOSSIL_ADD_TEST(cpp_algorithm_cstring_fixture, cpp_test_cstring_class_supported_false);
 
-    FOSSIL_TEST_REGISTER(cpp_algorithm_cstring_fixture);
+    FOSSIL_ADD_SUITE(cpp_algorithm_cstring_fixture);
 } // end of tests
 

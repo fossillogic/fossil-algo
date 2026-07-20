@@ -17,12 +17,12 @@
  * under the License.
  *
  * Author: Michael Gene Brockus (Dreamer)
- * Date: 04/05/2014
+ * Date: 04/05/2013
  *
- * Copyright (C) 2014-2025 Fossil Logic. All rights reserved.
+ * Copyright (C) 2013-Current Fossil Logic. All rights reserved.
  * -----------------------------------------------------------------------------
  */
-#include <fossil/pizza/framework.h>
+#include <fossil/maip/framework.h>
 
 #include "fossil/algorithm/framework.h"
 
@@ -162,24 +162,24 @@ FOSSIL_TEST(c_test_cstring_supported_false) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(c_cstring_tests) {
-    FOSSIL_TEST_ADD(c_algorithm_cstring_fixture, c_test_cstring_exec_find_found);
-    FOSSIL_TEST_ADD(c_algorithm_cstring_fixture, c_test_cstring_exec_find_not_found);
-    FOSSIL_TEST_ADD(c_algorithm_cstring_fixture, c_test_cstring_exec_rfind_found);
-    FOSSIL_TEST_ADD(c_algorithm_cstring_fixture, c_test_cstring_exec_rfind_not_found);
-    FOSSIL_TEST_ADD(c_algorithm_cstring_fixture, c_test_cstring_exec_count);
-    FOSSIL_TEST_ADD(c_algorithm_cstring_fixture, c_test_cstring_exec_equals_true);
-    FOSSIL_TEST_ADD(c_algorithm_cstring_fixture, c_test_cstring_exec_equals_false);
-    FOSSIL_TEST_ADD(c_algorithm_cstring_fixture, c_test_cstring_exec_iequals_true);
-    FOSSIL_TEST_ADD(c_algorithm_cstring_fixture, c_test_cstring_exec_iequals_false);
-    FOSSIL_TEST_ADD(c_algorithm_cstring_fixture, c_test_cstring_exec_toupper);
-    FOSSIL_TEST_ADD(c_algorithm_cstring_fixture, c_test_cstring_exec_tolower);
-    FOSSIL_TEST_ADD(c_algorithm_cstring_fixture, c_test_cstring_exec_reverse);
-    FOSSIL_TEST_ADD(c_algorithm_cstring_fixture, c_test_cstring_exec_invalid_algorithm);
-    FOSSIL_TEST_ADD(c_algorithm_cstring_fixture, c_test_cstring_exec_null_input);
-    FOSSIL_TEST_ADD(c_algorithm_cstring_fixture, c_test_cstring_exec_null_algorithm_id);
-    FOSSIL_TEST_ADD(c_algorithm_cstring_fixture, c_test_cstring_exec_output_too_small);
-    FOSSIL_TEST_ADD(c_algorithm_cstring_fixture, c_test_cstring_supported_true);
-    FOSSIL_TEST_ADD(c_algorithm_cstring_fixture, c_test_cstring_supported_false);
+    FOSSIL_ADD_TEST(c_algorithm_cstring_fixture, c_test_cstring_exec_find_found);
+    FOSSIL_ADD_TEST(c_algorithm_cstring_fixture, c_test_cstring_exec_find_not_found);
+    FOSSIL_ADD_TEST(c_algorithm_cstring_fixture, c_test_cstring_exec_rfind_found);
+    FOSSIL_ADD_TEST(c_algorithm_cstring_fixture, c_test_cstring_exec_rfind_not_found);
+    FOSSIL_ADD_TEST(c_algorithm_cstring_fixture, c_test_cstring_exec_count);
+    FOSSIL_ADD_TEST(c_algorithm_cstring_fixture, c_test_cstring_exec_equals_true);
+    FOSSIL_ADD_TEST(c_algorithm_cstring_fixture, c_test_cstring_exec_equals_false);
+    FOSSIL_ADD_TEST(c_algorithm_cstring_fixture, c_test_cstring_exec_iequals_true);
+    FOSSIL_ADD_TEST(c_algorithm_cstring_fixture, c_test_cstring_exec_iequals_false);
+    FOSSIL_ADD_TEST(c_algorithm_cstring_fixture, c_test_cstring_exec_toupper);
+    FOSSIL_ADD_TEST(c_algorithm_cstring_fixture, c_test_cstring_exec_tolower);
+    FOSSIL_ADD_TEST(c_algorithm_cstring_fixture, c_test_cstring_exec_reverse);
+    FOSSIL_ADD_TEST(c_algorithm_cstring_fixture, c_test_cstring_exec_invalid_algorithm);
+    FOSSIL_ADD_TEST(c_algorithm_cstring_fixture, c_test_cstring_exec_null_input);
+    FOSSIL_ADD_TEST(c_algorithm_cstring_fixture, c_test_cstring_exec_null_algorithm_id);
+    FOSSIL_ADD_TEST(c_algorithm_cstring_fixture, c_test_cstring_exec_output_too_small);
+    FOSSIL_ADD_TEST(c_algorithm_cstring_fixture, c_test_cstring_supported_true);
+    FOSSIL_ADD_TEST(c_algorithm_cstring_fixture, c_test_cstring_supported_false);
 
-    FOSSIL_TEST_REGISTER(c_algorithm_cstring_fixture);
+    FOSSIL_ADD_SUITE(c_algorithm_cstring_fixture);
 } // end of tests
