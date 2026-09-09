@@ -128,6 +128,9 @@ filter_stable(
     fossil_algorithm_filter_predicate pred,
     void *user
 ) {
+    if (count == 0) return 0;
+    if (stride != 0 && count > (size_t)-1 / stride) return 0;
+
     unsigned char *tmp = (unsigned char *)malloc(count * stride);
     if (!tmp) return 0;
 
@@ -198,22 +201,21 @@ filter_partition(
     fossil_algorithm_filter_predicate pred,
     void *user
 ) {
-    size_t left = 0;
-    size_t right = count;
+    size_t write = 0;
 
-    while (left < right) {
-        if (pred(base + left * stride, user)) {
-            ++left;
-        } else {
-            --right;
-            memmove(
-                base + left * stride,
-                base + right * stride,
-                stride
-            );
+    for (size_t i = 0; i < count; ++i) {
+        if (pred(base + i * stride, user)) {
+            if (write != i) {
+                memmove(
+                    base + write * stride,
+                    base + i * stride,
+                    stride
+                );
+            }
+            ++write;
         }
     }
-    return left;
+    return write;
 }
 
 static size_t
@@ -225,6 +227,7 @@ filter_lane_compact(
     fossil_algorithm_filter_predicate pred,
     void *user
 ) {
+    if (count == 0) return 0;
     if (lanes == 0) lanes = 1;
     if (lanes > count) lanes = count;
 
@@ -257,8 +260,10 @@ filter_lane_stable(
     fossil_algorithm_filter_predicate pred,
     void *user
 ) {
+    if (count == 0) return 0;
     if (lanes == 0) lanes = 1;
     if (lanes > count) lanes = count;
+    if (stride != 0 && count > (size_t)-1 / stride) return 0;
 
     unsigned char *tmp = (unsigned char *)malloc(count * stride);
     if (!tmp) return 0;

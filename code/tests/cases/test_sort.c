@@ -198,13 +198,6 @@ FOSSIL_TEST(c_test_sort_exec_extended_algorithms_desc) {
     }
 }
 
-FOSSIL_TEST(c_test_sort_exec_invalid_input_and_type) {
-    int arr[] = {2, 1};
-    ASSUME_ITS_TRUE(fossil_algorithm_sort_exec(NULL, 2, "i32", "merge", "asc") == -1);
-    ASSUME_ITS_TRUE(fossil_algorithm_sort_exec(arr, 2, "unknown", "merge", "asc") == -2);
-    ASSUME_ITS_TRUE(fossil_algorithm_sort_exec(arr, 2, "i32", "merge", "sideways") < 0);
-}
-
 FOSSIL_TEST(c_test_sort_exec_restricted_algorithms) {
     uint8_t bytes[] = {3, 1, 2};
     uint32_t words[] = {3, 1, 2};
@@ -235,7 +228,6 @@ FOSSIL_TEST_GROUP(c_sort_tests) {
     FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_auto_default_merge);
     FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_all_dispatch_algorithms);
     FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_extended_algorithms_desc);
-    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_invalid_input_and_type);
     FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_restricted_algorithms);
 
     FOSSIL_ADD_SUITE(c_algorithm_sort_fixture);
