@@ -160,6 +160,59 @@ FOSSIL_TEST(c_test_sort_exec_datetime_insertion_asc) {
     ASSUME_ITS_TRUE(memcmp(arr, expected, sizeof(arr)) == 0);
 }
 
+FOSSIL_TEST(c_test_sort_exec_auto_default_merge) {
+    int arr[] = {3, 1, 2};
+    int expected[] = {1, 2, 3};
+    int status = fossil_algorithm_sort_exec(arr, 3, "i32", "auto", "asc");
+    ASSUME_ITS_TRUE(status == 0);
+    ASSUME_ITS_TRUE(memcmp(arr, expected, sizeof(arr)) == 0);
+}
+
+FOSSIL_TEST(c_test_sort_exec_all_dispatch_algorithms) {
+    const char *algorithms[] = {
+        "binary_insertion", "cocktail", "comb", "gnome", "odd_even",
+        "bitonic", "flash", "american_flag", "patience", "tournament"
+    };
+    size_t count = sizeof(algorithms) / sizeof(algorithms[0]);
+    for (size_t i = 0; i < count; ++i) {
+        int arr[] = {5, 1, 4, 2, 3};
+        int expected[] = {1, 2, 3, 4, 5};
+        int status = fossil_algorithm_sort_exec(arr, 5, "i32", algorithms[i], "asc");
+        ASSUME_ITS_TRUE(status == 0);
+        ASSUME_ITS_TRUE(memcmp(arr, expected, sizeof(arr)) == 0);
+    }
+}
+
+FOSSIL_TEST(c_test_sort_exec_extended_algorithms_desc) {
+    const char *algorithms[] = {
+        "binary_insertion", "cocktail", "comb", "gnome", "odd_even",
+        "bitonic", "flash", "american_flag", "patience", "tournament"
+    };
+    size_t count = sizeof(algorithms) / sizeof(algorithms[0]);
+    for (size_t i = 0; i < count; ++i) {
+        int arr[] = {2, 5, 1, 4, 3};
+        int expected[] = {5, 4, 3, 2, 1};
+        int status = fossil_algorithm_sort_exec(arr, 5, "i32", algorithms[i], "desc");
+        ASSUME_ITS_TRUE(status == 0);
+        ASSUME_ITS_TRUE(memcmp(arr, expected, sizeof(arr)) == 0);
+    }
+}
+
+FOSSIL_TEST(c_test_sort_exec_invalid_input_and_type) {
+    int arr[] = {2, 1};
+    ASSUME_ITS_TRUE(fossil_algorithm_sort_exec(NULL, 2, "i32", "merge", "asc") == -1);
+    ASSUME_ITS_TRUE(fossil_algorithm_sort_exec(arr, 2, "unknown", "merge", "asc") == -2);
+    ASSUME_ITS_TRUE(fossil_algorithm_sort_exec(arr, 2, "i32", "merge", "sideways") < 0);
+}
+
+FOSSIL_TEST(c_test_sort_exec_restricted_algorithms) {
+    uint8_t bytes[] = {3, 1, 2};
+    uint32_t words[] = {3, 1, 2};
+    ASSUME_ITS_TRUE(fossil_algorithm_sort_exec(bytes, 3, "u8", "counting", "asc") == 0);
+    ASSUME_ITS_TRUE(fossil_algorithm_sort_exec(words, 3, "u32", "radix", "asc") == 0);
+    ASSUME_ITS_TRUE(fossil_algorithm_sort_exec(bytes, 3, "u8", "radix", "asc") < 0);
+}
+
 // * * * * * * * * * * * * * * * * * * * * * * * *
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
@@ -179,6 +232,11 @@ FOSSIL_TEST_GROUP(c_sort_tests) {
     FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_f32_shell_asc);
     FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_size_bubble_desc);
     FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_datetime_insertion_asc);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_auto_default_merge);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_all_dispatch_algorithms);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_extended_algorithms_desc);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_invalid_input_and_type);
+    FOSSIL_ADD_TEST(c_algorithm_sort_fixture, c_test_sort_exec_restricted_algorithms);
 
     FOSSIL_ADD_SUITE(c_algorithm_sort_fixture);
 } // end of tests

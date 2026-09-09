@@ -44,8 +44,10 @@ extern "C" {
  *
  * This function provides a flexible runtime interface for sorting arrays of
  * various types, using the algorithm, order, and type specified by string
- * identifiers. It supports multiple algorithms (merge, heap, insertion, shell,
- * bubble, counting, radix) and both ascending and descending order.
+ * identifiers. Supported algorithms are merge, heap, insertion, shell, bubble,
+ * counting, radix, binary_insertion, cocktail, comb, gnome, odd_even, bitonic,
+ * flash, american_flag, patience, and tournament. Both ascending and descending
+ * order are supported.
  *
  * Internally, the function dispatches to the appropriate algorithm stub based
  * on the algorithm_id string. Type safety is managed via type_id and a
