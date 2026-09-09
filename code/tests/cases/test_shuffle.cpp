@@ -47,10 +47,10 @@ FOSSIL_TEARDOWN(cpp_algorithm_shuffle_fixture) {
 // * Fossil Logic Test Sort
 // * * * * * * * * * * * * * * * * * * * * * * * *
 
-FOSSIL_TEST(cpp_test_shuffle_exec_fisher_yates_i32) {
+FOSSIL_TEST(cpp_test_shuffle_wrapper_exec_fisher_yates_i32) {
     int arr[] = {1, 2, 3, 4, 5};
     int orig[] = {1, 2, 3, 4, 5};
-    int status = fossil::algorithm::Shuffle::exec(arr, 5, "i32", "fisher-yates", "auto", 0);
+    int status = fossil::algorithm::Shuffle::exec(arr, 5, "i32", "fisher_yates");
     ASSUME_ITS_EQUAL_I32(status, 0);
     bool changed = false;
     for (int i = 0; i < 5; ++i) {
@@ -62,10 +62,10 @@ FOSSIL_TEST(cpp_test_shuffle_exec_fisher_yates_i32) {
     ASSUME_ITS_TRUE(changed);
 }
 
-FOSSIL_TEST(cpp_test_shuffle_exec_inside_out_f64) {
+FOSSIL_TEST(cpp_test_shuffle_wrapper_exec_inside_out_f64) {
     double arr[] = {1.1, 2.2, 3.3, 4.4};
     double orig[] = {1.1, 2.2, 3.3, 4.4};
-    int status = fossil::algorithm::Shuffle::exec(arr, 4, "f64", "inside-out", "auto", 0);
+    int status = fossil::algorithm::Shuffle::exec(arr, 4, "f64", "inside_out");
     ASSUME_ITS_EQUAL_I32(status, 0);
     bool changed = false;
     for (int i = 0; i < 4; ++i) {
@@ -77,7 +77,7 @@ FOSSIL_TEST(cpp_test_shuffle_exec_inside_out_f64) {
     ASSUME_ITS_TRUE(changed);
 }
 
-FOSSIL_TEST(cpp_test_shuffle_exec_auto_u8_seeded) {
+FOSSIL_TEST(cpp_test_shuffle_wrapper_exec_auto_u8_seeded) {
     uint8_t arr[] = {10, 20, 30, 40};
     uint8_t orig[] = {10, 20, 30, 40};
     int status = fossil::algorithm::Shuffle::exec(arr, 4, "u8", "auto", "seeded", 12345);
@@ -92,42 +92,36 @@ FOSSIL_TEST(cpp_test_shuffle_exec_auto_u8_seeded) {
     ASSUME_ITS_TRUE(changed);
 }
 
-FOSSIL_TEST(cpp_test_shuffle_exec_invalid_type) {
+FOSSIL_TEST(cpp_test_shuffle_wrapper_exec_invalid_type) {
     int arr[] = {1, 2, 3};
-    int status = fossil::algorithm::Shuffle::exec(arr, 3, "notatype", "auto", "auto", 0);
-    ASSUME_ITS_EQUAL_I32(status, -2);
+    ASSUME_ITS_EQUAL_I32(
+        fossil::algorithm::Shuffle::exec(arr, 3, "notatype"), -2);
 }
 
-FOSSIL_TEST(cpp_test_shuffle_exec_invalid_algorithm) {
+FOSSIL_TEST(cpp_test_shuffle_wrapper_exec_invalid_algorithm) {
     int arr[] = {1, 2, 3};
-    int status = fossil::algorithm::Shuffle::exec(arr, 3, "i32", "notalgo", "auto", 0);
-    ASSUME_ITS_EQUAL_I32(status, -3);
+    ASSUME_ITS_EQUAL_I32(
+        fossil::algorithm::Shuffle::exec(arr, 3, "i32", "notalgo"), -3);
 }
 
-FOSSIL_TEST(cpp_test_shuffle_exec_null_base) {
-    int status = fossil::algorithm::Shuffle::exec(NULL, 3, "i32", "auto", "auto", 0);
-    ASSUME_ITS_EQUAL_I32(status, -1);
+FOSSIL_TEST(cpp_test_shuffle_wrapper_exec_null_base) {
+    ASSUME_ITS_EQUAL_I32(
+        fossil::algorithm::Shuffle::exec(NULL, 3, "i32"), -1);
 }
 
-FOSSIL_TEST(cpp_test_shuffle_exec_zero_count) {
+FOSSIL_TEST(cpp_test_shuffle_wrapper_exec_zero_count) {
     int arr[] = {1, 2, 3};
-    int status = fossil::algorithm::Shuffle::exec(arr, 0, "i32", "auto", "auto", 0);
-    ASSUME_ITS_EQUAL_I32(status, -1);
+    ASSUME_ITS_EQUAL_I32(
+        fossil::algorithm::Shuffle::exec(arr, 0, "i32"), -1);
 }
 
-FOSSIL_TEST(cpp_test_shuffle_exec_null_type_id) {
-    int arr[] = {1, 2, 3};
-    int status = fossil::algorithm::Shuffle::exec(arr, 3, std::string(), "auto", "auto", 0);
-    ASSUME_ITS_EQUAL_I32(status, -2);
-}
-
-FOSSIL_TEST(cpp_test_shuffle_type_sizeof_supported) {
+FOSSIL_TEST(cpp_test_shuffle_wrapper_type_sizeof_supported) {
     ASSUME_ITS_TRUE(fossil::algorithm::Shuffle::type_sizeof("i32") == sizeof(int32_t));
     ASSUME_ITS_TRUE(fossil::algorithm::Shuffle::type_sizeof("f64") == sizeof(double));
     ASSUME_ITS_TRUE(fossil::algorithm::Shuffle::type_sizeof("cstr") == sizeof(char *));
 }
 
-FOSSIL_TEST(cpp_test_shuffle_type_supported_true_false) {
+FOSSIL_TEST(cpp_test_shuffle_wrapper_type_supported_true_false) {
     ASSUME_ITS_TRUE(fossil::algorithm::Shuffle::type_supported("u16") == true);
     ASSUME_ITS_TRUE(fossil::algorithm::Shuffle::type_supported("notatype") == false);
 }
@@ -136,16 +130,15 @@ FOSSIL_TEST(cpp_test_shuffle_type_supported_true_false) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(cpp_shuffle_tests) {
-    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_exec_fisher_yates_i32);
-    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_exec_inside_out_f64);
-    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_exec_auto_u8_seeded);
-    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_exec_invalid_type);
-    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_exec_invalid_algorithm);
-    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_exec_null_base);
-    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_exec_zero_count);
-    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_exec_null_type_id);
-    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_type_sizeof_supported);
-    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_type_supported_true_false);
+    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_wrapper_exec_fisher_yates_i32);
+    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_wrapper_exec_inside_out_f64);
+    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_wrapper_exec_auto_u8_seeded);
+    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_wrapper_exec_invalid_type);
+    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_wrapper_exec_invalid_algorithm);
+    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_wrapper_exec_null_base);
+    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_wrapper_exec_zero_count);
+    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_wrapper_type_sizeof_supported);
+    FOSSIL_ADD_TEST(cpp_algorithm_shuffle_fixture, cpp_test_shuffle_wrapper_type_supported_true_false);
 
     FOSSIL_ADD_SUITE(cpp_algorithm_shuffle_fixture);
 } // end of tests
