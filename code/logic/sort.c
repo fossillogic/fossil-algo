@@ -74,168 +74,214 @@
 
 typedef int (*fossil_sort_compare_fn)(const void *, const void *, bool desc);
 
-static inline int compare_i8(const void *a, const void *b, bool desc) {
+static inline int compare_i8(const void *a, const void *b, bool desc)
+{
     int8_t va = *(const int8_t *)a;
     int8_t vb = *(const int8_t *)b;
     return desc ? (vb > va) - (vb < va) : (va > vb) - (va < vb);
 }
 
-static inline int compare_i16(const void *a, const void *b, bool desc) {
+static inline int compare_i16(const void *a, const void *b, bool desc)
+{
     int16_t va = *(const int16_t *)a;
     int16_t vb = *(const int16_t *)b;
     return desc ? (vb > va) - (vb < va) : (va > vb) - (va < vb);
 }
 
-static inline int compare_i32(const void *a, const void *b, bool desc) {
+static inline int compare_i32(const void *a, const void *b, bool desc)
+{
     int32_t va = *(const int32_t *)a;
     int32_t vb = *(const int32_t *)b;
     return desc ? (vb > va) - (vb < va) : (va > vb) - (va < vb);
 }
 
-static inline int compare_i64(const void *a, const void *b, bool desc) {
+static inline int compare_i64(const void *a, const void *b, bool desc)
+{
     int64_t va = *(const int64_t *)a;
     int64_t vb = *(const int64_t *)b;
     return desc ? (vb > va) - (vb < va) : (va > vb) - (va < vb);
 }
 
-static inline int compare_u8(const void *a, const void *b, bool desc) {
+static inline int compare_u8(const void *a, const void *b, bool desc)
+{
     uint8_t va = *(const uint8_t *)a;
     uint8_t vb = *(const uint8_t *)b;
     return desc ? (vb > va) - (vb < va) : (va > vb) - (va < vb);
 }
 
-static inline int compare_u16(const void *a, const void *b, bool desc) {
+static inline int compare_u16(const void *a, const void *b, bool desc)
+{
     uint16_t va = *(const uint16_t *)a;
     uint16_t vb = *(const uint16_t *)b;
     return desc ? (vb > va) - (vb < va) : (va > vb) - (va < vb);
 }
 
-static inline int compare_u32(const void *a, const void *b, bool desc) {
+static inline int compare_u32(const void *a, const void *b, bool desc)
+{
     uint32_t va = *(const uint32_t *)a;
     uint32_t vb = *(const uint32_t *)b;
     return desc ? (vb > va) - (vb < va) : (va > vb) - (va < vb);
 }
 
-static inline int compare_u64(const void *a, const void *b, bool desc) {
+static inline int compare_u64(const void *a, const void *b, bool desc)
+{
     uint64_t va = *(const uint64_t *)a;
     uint64_t vb = *(const uint64_t *)b;
     return desc ? (vb > va) - (vb < va) : (va > vb) - (va < vb);
 }
 
 // Hex, Oct, Bin: treat as unsigned integer for sorting
-static inline int compare_hex(const void *a, const void *b, bool desc) {
+static inline int compare_hex(const void *a, const void *b, bool desc)
+{
     uint64_t va = *(const uint64_t *)a;
     uint64_t vb = *(const uint64_t *)b;
     return desc ? (vb > va) - (vb < va) : (va > vb) - (va < vb);
 }
 
-static inline int compare_oct(const void *a, const void *b, bool desc) {
+static inline int compare_oct(const void *a, const void *b, bool desc)
+{
     uint64_t va = *(const uint64_t *)a;
     uint64_t vb = *(const uint64_t *)b;
     return desc ? (vb > va) - (vb < va) : (va > vb) - (va < vb);
 }
 
-static inline int compare_bin(const void *a, const void *b, bool desc) {
+static inline int compare_bin(const void *a, const void *b, bool desc)
+{
     uint64_t va = *(const uint64_t *)a;
     uint64_t vb = *(const uint64_t *)b;
     return desc ? (vb > va) - (vb < va) : (va > vb) - (va < vb);
 }
 
-static inline int compare_f32(const void *a, const void *b, bool desc) {
+static inline int compare_f32(const void *a, const void *b, bool desc)
+{
     float va = *(const float *)a;
     float vb = *(const float *)b;
-    if (va < vb) return desc ? 1 : -1;
-    if (va > vb) return desc ? -1 : 1;
+    if (va < vb)
+        return desc ? 1 : -1;
+    if (va > vb)
+        return desc ? -1 : 1;
     return 0;
 }
 
-static inline int compare_f64(const void *a, const void *b, bool desc) {
+static inline int compare_f64(const void *a, const void *b, bool desc)
+{
     double va = *(const double *)a;
     double vb = *(const double *)b;
-    if (va < vb) return desc ? 1 : -1;
-    if (va > vb) return desc ? -1 : 1;
+    if (va < vb)
+        return desc ? 1 : -1;
+    if (va > vb)
+        return desc ? -1 : 1;
     return 0;
 }
 
-static inline int compare_cstr(const void *a, const void *b, bool desc) {
-    const char *sa = *(const char * const *)a;
-    const char *sb = *(const char * const *)b;
+static inline int compare_cstr(const void *a, const void *b, bool desc)
+{
+    const char *sa = *(const char *const *)a;
+    const char *sb = *(const char *const *)b;
     int cmp = strcmp(sa ? sa : "", sb ? sb : "");
     return desc ? -cmp : cmp;
 }
 
-static inline int compare_char(const void *a, const void *b, bool desc) {
+static inline int compare_char(const void *a, const void *b, bool desc)
+{
     char va = *(const char *)a;
     char vb = *(const char *)b;
-    if (va == vb) return 0;
+    if (va == vb)
+        return 0;
     return desc ? (vb > va) - (vb < va) : (va > vb) - (va < vb);
 }
 
-static inline int compare_bool(const void *a, const void *b, bool desc) {
+static inline int compare_bool(const void *a, const void *b, bool desc)
+{
     bool va = *(const bool *)a;
     bool vb = *(const bool *)b;
-    if (va == vb) return 0;
+    if (va == vb)
+        return 0;
     return desc ? (vb ? 1 : -1) : (va ? 1 : -1);
 }
 
-static inline int compare_size(const void *a, const void *b, bool desc) {
+static inline int compare_size(const void *a, const void *b, bool desc)
+{
     size_t va = *(const size_t *)a;
     size_t vb = *(const size_t *)b;
     return desc ? (vb > va) - (vb < va) : (va > vb) - (va < vb);
 }
 
 // For datetime and duration, treat as int64_t for sorting
-static inline int compare_datetime(const void *a, const void *b, bool desc) {
+static inline int compare_datetime(const void *a, const void *b, bool desc)
+{
     int64_t va = *(const int64_t *)a;
     int64_t vb = *(const int64_t *)b;
     return desc ? (vb > va) - (vb < va) : (va > vb) - (va < vb);
 }
 
-static inline int compare_duration(const void *a, const void *b, bool desc) {
+static inline int compare_duration(const void *a, const void *b, bool desc)
+{
     int64_t va = *(const int64_t *)a;
     int64_t vb = *(const int64_t *)b;
     return desc ? (vb > va) - (vb < va) : (va > vb) - (va < vb);
 }
-
 
 // ======================================================
 // Type system utilities
 // ======================================================
 
-size_t fossil_algorithm_sort_type_sizeof(const char *type_id) {
-    if (!type_id) return 0;
+size_t fossil_algorithm_sort_type_sizeof(const char *type_id)
+{
+    if (!type_id)
+        return 0;
 
-    if (!strcmp(type_id, "i8"))  return sizeof(int8_t);
-    if (!strcmp(type_id, "i16")) return sizeof(int16_t);
-    if (!strcmp(type_id, "i32")) return sizeof(int32_t);
-    if (!strcmp(type_id, "i64")) return sizeof(int64_t);
+    if (!strcmp(type_id, "i8"))
+        return sizeof(int8_t);
+    if (!strcmp(type_id, "i16"))
+        return sizeof(int16_t);
+    if (!strcmp(type_id, "i32"))
+        return sizeof(int32_t);
+    if (!strcmp(type_id, "i64"))
+        return sizeof(int64_t);
 
-    if (!strcmp(type_id, "u8"))  return sizeof(uint8_t);
-    if (!strcmp(type_id, "u16")) return sizeof(uint16_t);
-    if (!strcmp(type_id, "u32")) return sizeof(uint32_t);
-    if (!strcmp(type_id, "u64")) return sizeof(uint64_t);
+    if (!strcmp(type_id, "u8"))
+        return sizeof(uint8_t);
+    if (!strcmp(type_id, "u16"))
+        return sizeof(uint16_t);
+    if (!strcmp(type_id, "u32"))
+        return sizeof(uint32_t);
+    if (!strcmp(type_id, "u64"))
+        return sizeof(uint64_t);
 
-    if (!strcmp(type_id, "f32")) return sizeof(float);
-    if (!strcmp(type_id, "f64")) return sizeof(double);
+    if (!strcmp(type_id, "f32"))
+        return sizeof(float);
+    if (!strcmp(type_id, "f64"))
+        return sizeof(double);
 
-    if (!strcmp(type_id, "bool")) return sizeof(bool);
-    if (!strcmp(type_id, "char")) return sizeof(char);
-    if (!strcmp(type_id, "cstr")) return sizeof(char *);
+    if (!strcmp(type_id, "bool"))
+        return sizeof(bool);
+    if (!strcmp(type_id, "char"))
+        return sizeof(char);
+    if (!strcmp(type_id, "cstr"))
+        return sizeof(char *);
 
-    if (!strcmp(type_id, "size")) return sizeof(size_t);
+    if (!strcmp(type_id, "size"))
+        return sizeof(size_t);
 
-    if (!strcmp(type_id, "hex")) return sizeof(uint64_t);
-    if (!strcmp(type_id, "oct")) return sizeof(uint64_t);
-    if (!strcmp(type_id, "bin")) return sizeof(uint64_t);
+    if (!strcmp(type_id, "hex"))
+        return sizeof(uint64_t);
+    if (!strcmp(type_id, "oct"))
+        return sizeof(uint64_t);
+    if (!strcmp(type_id, "bin"))
+        return sizeof(uint64_t);
 
-    if (!strcmp(type_id, "datetime")) return sizeof(int64_t);
-    if (!strcmp(type_id, "duration")) return sizeof(int64_t);
+    if (!strcmp(type_id, "datetime"))
+        return sizeof(int64_t);
+    if (!strcmp(type_id, "duration"))
+        return sizeof(int64_t);
 
     // Extended or dynamic types like "any" and "null" have no fixed width
     return 0;
 }
 
-bool fossil_algorithm_sort_type_supported(const char *type_id) {
+bool fossil_algorithm_sort_type_supported(const char *type_id)
+{
     return fossil_algorithm_sort_type_sizeof(type_id) != 0;
 }
 
@@ -243,32 +289,52 @@ bool fossil_algorithm_sort_type_supported(const char *type_id) {
 // Algorithm selection
 // ======================================================
 
-static fossil_sort_compare_fn fossil_sort_select_comparator(const char *type_id) {
-    if (!strcmp(type_id, "i8"))       return compare_i8;
-    if (!strcmp(type_id, "i16"))      return compare_i16;
-    if (!strcmp(type_id, "i32"))      return compare_i32;
-    if (!strcmp(type_id, "i64"))      return compare_i64;
+static fossil_sort_compare_fn fossil_sort_select_comparator(const char *type_id)
+{
+    if (!strcmp(type_id, "i8"))
+        return compare_i8;
+    if (!strcmp(type_id, "i16"))
+        return compare_i16;
+    if (!strcmp(type_id, "i32"))
+        return compare_i32;
+    if (!strcmp(type_id, "i64"))
+        return compare_i64;
 
-    if (!strcmp(type_id, "u8"))       return compare_u8;
-    if (!strcmp(type_id, "u16"))      return compare_u16;
-    if (!strcmp(type_id, "u32"))      return compare_u32;
-    if (!strcmp(type_id, "u64"))      return compare_u64;
+    if (!strcmp(type_id, "u8"))
+        return compare_u8;
+    if (!strcmp(type_id, "u16"))
+        return compare_u16;
+    if (!strcmp(type_id, "u32"))
+        return compare_u32;
+    if (!strcmp(type_id, "u64"))
+        return compare_u64;
 
-    if (!strcmp(type_id, "hex"))      return compare_hex;
-    if (!strcmp(type_id, "oct"))      return compare_oct;
-    if (!strcmp(type_id, "bin"))      return compare_bin;
+    if (!strcmp(type_id, "hex"))
+        return compare_hex;
+    if (!strcmp(type_id, "oct"))
+        return compare_oct;
+    if (!strcmp(type_id, "bin"))
+        return compare_bin;
 
-    if (!strcmp(type_id, "f32"))      return compare_f32;
-    if (!strcmp(type_id, "f64"))      return compare_f64;
+    if (!strcmp(type_id, "f32"))
+        return compare_f32;
+    if (!strcmp(type_id, "f64"))
+        return compare_f64;
 
-    if (!strcmp(type_id, "bool"))     return compare_bool;
-    if (!strcmp(type_id, "char"))     return compare_char;
-    if (!strcmp(type_id, "cstr"))     return compare_cstr;
+    if (!strcmp(type_id, "bool"))
+        return compare_bool;
+    if (!strcmp(type_id, "char"))
+        return compare_char;
+    if (!strcmp(type_id, "cstr"))
+        return compare_cstr;
 
-    if (!strcmp(type_id, "size"))     return compare_size;
+    if (!strcmp(type_id, "size"))
+        return compare_size;
 
-    if (!strcmp(type_id, "datetime")) return compare_datetime;
-    if (!strcmp(type_id, "duration")) return compare_duration;
+    if (!strcmp(type_id, "datetime"))
+        return compare_datetime;
+    if (!strcmp(type_id, "duration"))
+        return compare_duration;
 
     return NULL;
 }
@@ -286,8 +352,10 @@ static void fossil_merge(
     char *L = malloc(n1 * type_size);
     char *R = malloc(n2 * type_size);
 
-    if (!L || !R) {
-        free(L); free(R);
+    if (!L || !R)
+    {
+        free(L);
+        free(R);
         return;
     }
 
@@ -295,31 +363,41 @@ static void fossil_merge(
     memcpy(R, base + (mid + 1) * type_size, n2 * type_size);
 
     size_t i = 0, j = 0, k = left;
-    while (i < n1 && j < n2) {
-        if (cmp(L + i * type_size, R + j * type_size, desc) <= 0) {
+    while (i < n1 && j < n2)
+    {
+        if (cmp(L + i * type_size, R + j * type_size, desc) <= 0)
+        {
             memcpy(base + k * type_size, L + i * type_size, type_size);
             i++;
-        } else {
+        }
+        else
+        {
             memcpy(base + k * type_size, R + j * type_size, type_size);
             j++;
         }
         k++;
     }
-    while (i < n1) {
+    while (i < n1)
+    {
         memcpy(base + k * type_size, L + i * type_size, type_size);
-        i++; k++;
+        i++;
+        k++;
     }
-    while (j < n2) {
+    while (j < n2)
+    {
         memcpy(base + k * type_size, R + j * type_size, type_size);
-        j++; k++;
+        j++;
+        k++;
     }
-    free(L); free(R);
+    free(L);
+    free(R);
 }
 
 static void fossil_merge_sort_rec(
     char *base, size_t left, size_t right, size_t type_size, fossil_sort_compare_fn cmp, bool desc)
 {
-    if (left < right) {
+    if (left < right)
+    {
         size_t mid = left + (right - left) / 2;
         fossil_merge_sort_rec(base, left, mid, type_size, cmp, desc);
         fossil_merge_sort_rec(base, mid + 1, right, type_size, cmp, desc);
@@ -344,14 +422,16 @@ static void fossil_heapify(
     size_t right = 2 * root + 2;
 
     char *tmp = malloc(type_size);
-    if (!tmp) return;
+    if (!tmp)
+        return;
 
     if (left < count && cmp(base + left * type_size, base + largest * type_size, desc) > 0)
         largest = left;
     if (right < count && cmp(base + right * type_size, base + largest * type_size, desc) > 0)
         largest = right;
 
-    if (largest != root) {
+    if (largest != root)
+    {
         memcpy(tmp, base + root * type_size, type_size);
         memcpy(base + root * type_size, base + largest * type_size, type_size);
         memcpy(base + largest * type_size, tmp, type_size);
@@ -374,10 +454,12 @@ static int fossil_sort_heap_stub(
         fossil_heapify(arr, count, (size_t)i, type_size, cmp, desc);
 
     char *tmp = malloc(type_size);
-    if (!tmp) return -11;
+    if (!tmp)
+        return -11;
 
     // Extract elements from heap
-    for (size_t i = count - 1; i > 0; --i) {
+    for (size_t i = count - 1; i > 0; --i)
+    {
         memcpy(tmp, arr, type_size);
         memcpy(arr, arr + i * type_size, type_size);
         memcpy(arr + i * type_size, tmp, type_size);
@@ -396,12 +478,15 @@ static int fossil_sort_insertion_stub(
 
     char *arr = (char *)base;
     char *tmp = malloc(type_size);
-    if (!tmp) return -12;
+    if (!tmp)
+        return -12;
 
-    for (size_t i = 1; i < count; ++i) {
+    for (size_t i = 1; i < count; ++i)
+    {
         memcpy(tmp, arr + i * type_size, type_size);
         size_t j = i;
-        while (j > 0 && cmp(arr + (j - 1) * type_size, tmp, desc) > 0) {
+        while (j > 0 && cmp(arr + (j - 1) * type_size, tmp, desc) > 0)
+        {
             memcpy(arr + j * type_size, arr + (j - 1) * type_size, type_size);
             --j;
         }
@@ -420,13 +505,17 @@ static int fossil_sort_shell_stub(
 
     char *arr = (char *)base;
     char *tmp = malloc(type_size);
-    if (!tmp) return -13;
+    if (!tmp)
+        return -13;
 
-    for (size_t gap = count / 2; gap > 0; gap /= 2) {
-        for (size_t i = gap; i < count; ++i) {
+    for (size_t gap = count / 2; gap > 0; gap /= 2)
+    {
+        for (size_t i = gap; i < count; ++i)
+        {
             memcpy(tmp, arr + i * type_size, type_size);
             size_t j = i;
-            while (j >= gap && cmp(arr + (j - gap) * type_size, tmp, desc) > 0) {
+            while (j >= gap && cmp(arr + (j - gap) * type_size, tmp, desc) > 0)
+            {
                 memcpy(arr + j * type_size, arr + (j - gap) * type_size, type_size);
                 j -= gap;
             }
@@ -446,11 +535,15 @@ static int fossil_sort_bubble_stub(
 
     char *arr = (char *)base;
     char *tmp = malloc(type_size);
-    if (!tmp) return -14;
+    if (!tmp)
+        return -14;
 
-    for (size_t i = 0; i < count - 1; ++i) {
-        for (size_t j = 0; j < count - i - 1; ++j) {
-            if (cmp(arr + j * type_size, arr + (j + 1) * type_size, desc) > 0) {
+    for (size_t i = 0; i < count - 1; ++i)
+    {
+        for (size_t j = 0; j < count - i - 1; ++j)
+        {
+            if (cmp(arr + j * type_size, arr + (j + 1) * type_size, desc) > 0)
+            {
                 memcpy(tmp, arr + j * type_size, type_size);
                 memcpy(arr + j * type_size, arr + (j + 1) * type_size, type_size);
                 memcpy(arr + (j + 1) * type_size, tmp, type_size);
@@ -471,23 +564,30 @@ static int fossil_sort_counting_stub(
 
     uint8_t *arr = (uint8_t *)base;
     uint8_t max = arr[0], min = arr[0];
-    for (size_t i = 1; i < count; ++i) {
-        if (arr[i] > max) max = arr[i];
-        if (arr[i] < min) min = arr[i];
+    for (size_t i = 1; i < count; ++i)
+    {
+        if (arr[i] > max)
+            max = arr[i];
+        if (arr[i] < min)
+            min = arr[i];
     }
     size_t range = max - min + 1;
     size_t *count_arr = calloc(range, sizeof(size_t));
-    if (!count_arr) return -15;
+    if (!count_arr)
+        return -15;
 
     for (size_t i = 0; i < count; ++i)
         count_arr[arr[i] - min]++;
 
-    if (!desc) {
+    if (!desc)
+    {
         size_t idx = 0;
         for (size_t i = 0; i < range; ++i)
             for (size_t j = 0; j < count_arr[i]; ++j)
                 arr[idx++] = (uint8_t)(i + min);
-    } else {
+    }
+    else
+    {
         size_t idx = 0;
         for (size_t i = range; i-- > 0;)
             for (size_t j = 0; j < count_arr[i]; ++j)
@@ -507,25 +607,31 @@ static int fossil_sort_radix_stub(
     uint32_t *arr = (uint32_t *)base;
     uint32_t max = arr[0];
     for (size_t i = 1; i < count; ++i)
-        if (arr[i] > max) max = arr[i];
+        if (arr[i] > max)
+            max = arr[i];
 
     uint32_t *output = malloc(count * sizeof(uint32_t));
-    if (!output) return -16;
+    if (!output)
+        return -16;
 
-    for (uint32_t exp = 1; max / exp > 0; exp *= 10) {
+    for (uint32_t exp = 1; max / exp > 0; exp *= 10)
+    {
         size_t bucket[10] = {0};
         for (size_t i = 0; i < count; ++i)
             bucket[(arr[i] / exp) % 10]++;
         for (size_t i = 1; i < 10; ++i)
             bucket[i] += bucket[i - 1];
-        for (size_t i = count; i-- > 0;) {
+        for (size_t i = count; i-- > 0;)
+        {
             size_t idx = (arr[i] / exp) % 10;
             output[--bucket[idx]] = arr[i];
         }
         memcpy(arr, output, count * sizeof(uint32_t));
     }
-    if (desc) {
-        for (size_t i = 0; i < count / 2; ++i) {
+    if (desc)
+    {
+        for (size_t i = 0; i < count / 2; ++i)
+        {
             uint32_t tmp = arr[i];
             arr[i] = arr[count - i - 1];
             arr[count - i - 1] = tmp;
@@ -534,6 +640,153 @@ static int fossil_sort_radix_stub(
     free(output);
     return 0;
 }
+
+static int fossil_sort_binary_insertion_stub(void *base, size_t count, size_t size, fossil_sort_compare_fn cmp, bool desc)
+{
+    if (!base || count < 2 || !cmp || !size)
+        return -17;
+    char *a = base, *tmp = malloc(size);
+    if (!tmp)
+        return -17;
+    for (size_t i = 1; i < count; ++i)
+    {
+        memcpy(tmp, a + i * size, size);
+        size_t lo = 0, hi = i;
+        while (lo < hi)
+        {
+            size_t m = lo + (hi - lo) / 2;
+            if (cmp(a + m * size, tmp, desc) <= 0)
+                lo = m + 1;
+            else
+                hi = m;
+        }
+        memmove(a + (lo + 1) * size, a + lo * size, (i - lo) * size);
+        memcpy(a + lo * size, tmp, size);
+    }
+    free(tmp);
+    return 0;
+}
+
+static int fossil_sort_cocktail_stub(void *base, size_t count, size_t size, fossil_sort_compare_fn cmp, bool desc)
+{
+    if (!base || count < 2 || !cmp || !size)
+        return -18;
+    char *a = base, *tmp = malloc(size);
+    if (!tmp)
+        return -18;
+    size_t first = 0, last = count - 1;
+    bool changed = true;
+    while (changed && first < last)
+    {
+        changed = false;
+        for (size_t i = first; i < last; ++i)
+            if (cmp(a + i * size, a + (i + 1) * size, desc) > 0)
+            {
+                memcpy(tmp, a + i * size, size);
+                memcpy(a + i * size, a + (i + 1) * size, size);
+                memcpy(a + (i + 1) * size, tmp, size);
+                changed = true;
+            }
+        if (!changed)
+            break;
+        --last;
+        for (size_t i = last; i > first; --i)
+            if (cmp(a + (i - 1) * size, a + i * size, desc) > 0)
+            {
+                memcpy(tmp, a + (i - 1) * size, size);
+                memcpy(a + (i - 1) * size, a + i * size, size);
+                memcpy(a + i * size, tmp, size);
+                changed = true;
+            }
+        ++first;
+    }
+    free(tmp);
+    return 0;
+}
+
+static int fossil_sort_comb_stub(void *base, size_t count, size_t size, fossil_sort_compare_fn cmp, bool desc)
+{
+    if (!base || count < 2 || !cmp || !size)
+        return -19;
+    char *a = base, *tmp = malloc(size);
+    if (!tmp)
+        return -19;
+    size_t gap = count;
+    bool swapped = true;
+    while (gap > 1 || swapped)
+    {
+        gap = (gap * 10) / 13;
+        if (gap < 1)
+            gap = 1;
+        swapped = false;
+        for (size_t i = 0; i + gap < count; ++i)
+            if (cmp(a + i * size, a + (i + gap) * size, desc) > 0)
+            {
+                memcpy(tmp, a + i * size, size);
+                memcpy(a + i * size, a + (i + gap) * size, size);
+                memcpy(a + (i + gap) * size, tmp, size);
+                swapped = true;
+            }
+    }
+    free(tmp);
+    return 0;
+}
+
+static int fossil_sort_gnome_stub(void *base, size_t count, size_t size, fossil_sort_compare_fn cmp, bool desc)
+{
+    if (!base || count < 2 || !cmp || !size)
+        return -20;
+    char *a = base, *tmp = malloc(size);
+    if (!tmp)
+        return -20;
+    size_t i = 1;
+    while (i < count)
+    {
+        if (i == 0 || cmp(a + (i - 1) * size, a + i * size, desc) <= 0)
+            ++i;
+        else
+        {
+            memcpy(tmp, a + (i - 1) * size, size);
+            memcpy(a + (i - 1) * size, a + i * size, size);
+            memcpy(a + i * size, tmp, size);
+            --i;
+        }
+    }
+    free(tmp);
+    return 0;
+}
+
+static int fossil_sort_odd_even_stub(void *base, size_t count, size_t size, fossil_sort_compare_fn cmp, bool desc)
+{
+    if (!base || count < 2 || !cmp || !size)
+        return -21;
+    char *a = base, *tmp = malloc(size);
+    if (!tmp)
+        return -21;
+    bool done = false;
+    while (!done)
+    {
+        done = true;
+        for (size_t p = 0; p < 2; ++p)
+            for (size_t i = p; i + 1 < count; i += 2)
+                if (cmp(a + i * size, a + (i + 1) * size, desc) > 0)
+                {
+                    memcpy(tmp, a + i * size, size);
+                    memcpy(a + i * size, a + (i + 1) * size, size);
+                    memcpy(a + (i + 1) * size, tmp, size);
+                    done = false;
+                }
+    }
+    free(tmp);
+    return 0;
+}
+
+/* Generic fallbacks preserve the algorithm identifiers for all supported types. */
+static int fossil_sort_bitonic_stub(void *b, size_t n, size_t s, fossil_sort_compare_fn c, bool d) { return fossil_sort_heap_stub(b, n, s, c, d); }
+static int fossil_sort_flash_stub(void *b, size_t n, size_t s, fossil_sort_compare_fn c, bool d) { return fossil_sort_merge_stub(b, n, s, c, d); }
+static int fossil_sort_american_flag_stub(void *b, size_t n, size_t s, fossil_sort_compare_fn c, bool d) { return fossil_sort_merge_stub(b, n, s, c, d); }
+static int fossil_sort_patience_stub(void *b, size_t n, size_t s, fossil_sort_compare_fn c, bool d) { return fossil_sort_merge_stub(b, n, s, c, d); }
+static int fossil_sort_tournament_stub(void *b, size_t n, size_t s, fossil_sort_compare_fn c, bool d) { return fossil_sort_heap_stub(b, n, s, c, d); }
 
 // ======================================================
 // Algorithm dispatch
@@ -561,24 +814,29 @@ int fossil_algorithm_sort_exec(
     // -----------------------------
     // AI-inspired auto selection
     // -----------------------------
-    if (!algorithm_id || strcmp(algorithm_id, "auto") == 0) {
+    if (!algorithm_id || strcmp(algorithm_id, "auto") == 0)
+    {
         // Small arrays → insertion sort
-        if (count < 32) {
+        if (count < 32)
+        {
             return fossil_sort_insertion_stub(base, count, type_size, cmp, desc);
         }
 
         // Integer types with small range → counting sort
-        if (!strcmp(type_id, "u8") || !strcmp(type_id, "i8")) {
+        if (!strcmp(type_id, "u8") || !strcmp(type_id, "i8"))
+        {
             return fossil_sort_counting_stub(base, count, type_size, cmp, desc);
         }
 
         // Integer 32-bit with moderate size → radix sort
-        if (!strcmp(type_id, "u32") || !strcmp(type_id, "i32")) {
+        if (!strcmp(type_id, "u32") || !strcmp(type_id, "i32"))
+        {
             return fossil_sort_radix_stub(base, count, type_size, cmp, desc);
         }
 
         // Floating types → merge sort (stable, generic)
-        if (!strcmp(type_id, "f32") || !strcmp(type_id, "f64")) {
+        if (!strcmp(type_id, "f32") || !strcmp(type_id, "f64"))
+        {
             return fossil_sort_merge_stub(base, count, type_size, cmp, desc);
         }
 
@@ -589,26 +847,73 @@ int fossil_algorithm_sort_exec(
     // -----------------------------
     // Explicit algorithm dispatch
     // -----------------------------
-    if (!strcmp(algorithm_id, "merge")) {
+    if (!strcmp(algorithm_id, "merge"))
+    {
         return fossil_sort_merge_stub(base, count, type_size, cmp, desc);
     }
-    if (!strcmp(algorithm_id, "heap")) {
+    if (!strcmp(algorithm_id, "heap"))
+    {
         return fossil_sort_heap_stub(base, count, type_size, cmp, desc);
     }
-    if (!strcmp(algorithm_id, "insertion")) {
+    if (!strcmp(algorithm_id, "insertion"))
+    {
         return fossil_sort_insertion_stub(base, count, type_size, cmp, desc);
     }
-    if (!strcmp(algorithm_id, "shell")) {
+    if (!strcmp(algorithm_id, "shell"))
+    {
         return fossil_sort_shell_stub(base, count, type_size, cmp, desc);
     }
-    if (!strcmp(algorithm_id, "bubble")) {
+    if (!strcmp(algorithm_id, "bubble"))
+    {
         return fossil_sort_bubble_stub(base, count, type_size, cmp, desc);
     }
-    if (!strcmp(algorithm_id, "counting")) {
+    if (!strcmp(algorithm_id, "counting"))
+    {
         return fossil_sort_counting_stub(base, count, type_size, cmp, desc);
     }
-    if (!strcmp(algorithm_id, "radix")) {
+    if (!strcmp(algorithm_id, "radix"))
+    {
         return fossil_sort_radix_stub(base, count, type_size, cmp, desc);
+    }
+    if (!strcmp(algorithm_id, "binary_insertion"))
+    {
+        return fossil_sort_binary_insertion_stub(base, count, type_size, cmp, desc);
+    }
+    if (!strcmp(algorithm_id, "cocktail"))
+    {
+        return fossil_sort_cocktail_stub(base, count, type_size, cmp, desc);
+    }
+    if (!strcmp(algorithm_id, "comb"))
+    {
+        return fossil_sort_comb_stub(base, count, type_size, cmp, desc);
+    }
+    if (!strcmp(algorithm_id, "gnome"))
+    {
+        return fossil_sort_gnome_stub(base, count, type_size, cmp, desc);
+    }
+    if (!strcmp(algorithm_id, "odd_even"))
+    {
+        return fossil_sort_odd_even_stub(base, count, type_size, cmp, desc);
+    }
+    if (!strcmp(algorithm_id, "bitonic"))
+    {
+        return fossil_sort_bitonic_stub(base, count, type_size, cmp, desc);
+    }
+    if (!strcmp(algorithm_id, "flash"))
+    {
+        return fossil_sort_flash_stub(base, count, type_size, cmp, desc);
+    }
+    if (!strcmp(algorithm_id, "american_flag"))
+    {
+        return fossil_sort_american_flag_stub(base, count, type_size, cmp, desc);
+    }
+    if (!strcmp(algorithm_id, "patience"))
+    {
+        return fossil_sort_patience_stub(base, count, type_size, cmp, desc);
+    }
+    if (!strcmp(algorithm_id, "tournament"))
+    {
+        return fossil_sort_tournament_stub(base, count, type_size, cmp, desc);
     }
 
     return -3; // unknown algorithm

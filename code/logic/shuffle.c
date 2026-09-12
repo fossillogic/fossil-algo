@@ -58,6 +58,21 @@ static inline void fossil_algorithm_shuffle_swap(void *a, void *b, size_t size)
     }
 }
 
+static inline uint64_t fossil_algorithm_shuffle_next(uint64_t *state)
+{
+    uint64_t x = *state ? *state : UINT64_C(0x9e3779b97f4a7c15);
+    x ^= x >> 12;
+    x ^= x << 25;
+    x ^= x >> 27;
+    *state = x;
+    return x * UINT64_C(0x2545f4914f6cdd1d);
+}
+
+static inline size_t fossil_algorithm_shuffle_bounded(uint64_t *state, size_t bound)
+{
+    return (size_t)(fossil_algorithm_shuffle_next(state) % bound);
+}
+
 // ======================================================
 // Type Size Resolution
 // ======================================================
@@ -97,11 +112,11 @@ bool fossil_algorithm_shuffle_type_supported(const char *type_id)
 static void fossil_algorithm_shuffle_fisher_yates(void *base, size_t count, size_t size, uint64_t seed)
 {
     unsigned char *data = (unsigned char *)base;
-    srand((unsigned int)(seed & 0xFFFFFFFFULL));
+    uint64_t state = seed;
 
     for (size_t i = count - 1; i > 0; --i)
     {
-        size_t j = (size_t)(rand() % (i + 1));
+        size_t j = fossil_algorithm_shuffle_bounded(&state, i + 1);
         fossil_algorithm_shuffle_swap(data + i * size, data + j * size, size);
     }
 }
@@ -109,40 +124,108 @@ static void fossil_algorithm_shuffle_fisher_yates(void *base, size_t count, size
 static void fossil_algorithm_shuffle_inside_out(void *base, size_t count, size_t size, uint64_t seed)
 {
     unsigned char *data = (unsigned char *)base;
-    srand((unsigned int)(seed & 0xFFFFFFFFULL));
+    uint64_t state = seed;
 
     for (size_t i = 1; i < count; ++i)
     {
-        size_t j = (size_t)(rand() % (i + 1));
+        size_t j = fossil_algorithm_shuffle_bounded(&state, i + 1);
         if (j != i)
             fossil_algorithm_shuffle_swap(data + i * size, data + j * size, size);
+    }
+}
+
+/* Inside-out Fisher-Yates.  The public API supplies an existing array, so the
+ * array itself is used as the destination buffer. */
+static void fossil_algorithm_shuffle_knuth(void *base, size_t count, size_t size, uint64_t seed)
+{
+    fossil_algorithm_shuffle_fisher_yates(base, count, size, seed);
+}
+
+static void fossil_algorithm_shuffle_transposition(void *base, size_t count, size_t size, uint64_t seed)
+{
+    if (count < 2) return;
+    unsigned char *data = (unsigned char *)base;
+    uint64_t state = seed;
+    for (size_t i = 0; i < count * 2; ++i)
+    {
+        size_t a = fossil_algorithm_shuffle_bounded(&state, count);
+        size_t b = fossil_algorithm_shuffle_bounded(&state, count);
+        fossil_algorithm_shuffle_swap(data + a * size, data + b * size, size);
+    }
+}
+
+static void fossil_algorithm_shuffle_riffle(void *base, size_t count, size_t size, uint64_t seed)
+{
+    if (count < 2) return;
+    unsigned char *data = (unsigned char *)base;
+    unsigned char *tmp = (unsigned char *)malloc(count * size);
+    if (!tmp) return;
+    uint64_t state = seed;
+    size_t cut = fossil_algorithm_shuffle_bounded(&state, count + 1);
+    size_t left = 0, right = cut, out = 0;
+    while (left < cut || right < count)
+    {
+        bool take_left = right == count || (left < cut &&
+            fossil_algorithm_shuffle_bounded(&state, (cut - left) + (count - right)) < cut - left);
+        size_t source = take_left ? left++ : right++;
+        memcpy(tmp + out++ * size, data + source * size, size);
+    }
+    memcpy(data, tmp, count * size);
+    free(tmp);
+}
+
+static void fossil_algorithm_shuffle_overhand(void *base, size_t count, size_t size, uint64_t seed)
+{
+    /* Randomly sized packets, placed from the front, model an overhand pass. */
+    if (count < 2) return;
+    unsigned char *data = (unsigned char *)base;
+    uint64_t state = seed;
+    size_t pos = 0;
+    while (pos < count)
+    {
+        size_t n = 1 + fossil_algorithm_shuffle_bounded(&state, count - pos);
+        for (size_t i = 0; i < n / 2; ++i)
+            fossil_algorithm_shuffle_swap(data + (pos + i) * size,
+                                           data + (pos + n - 1 - i) * size, size);
+        pos += n;
+    }
+    fossil_algorithm_shuffle_riffle(base, count, size, state);
+}
+
+static void fossil_algorithm_shuffle_permutation(void *base, size_t count, size_t size, uint64_t seed)
+{
+    /* Applying swaps while generating the permutation is equivalent to
+     * generating an explicit permutation, without a second index array. */
+    fossil_algorithm_shuffle_fisher_yates(base, count, size, seed);
+}
+
+static void fossil_algorithm_shuffle_derangement(void *base, size_t count, size_t size, uint64_t seed)
+{
+    if (count < 2) return;
+    unsigned char *data = (unsigned char *)base;
+    uint64_t state = seed;
+    for (size_t i = count - 1; i > 0; --i)
+    {
+        size_t j = fossil_algorithm_shuffle_bounded(&state, i);
+        fossil_algorithm_shuffle_swap(data + i * size, data + j * size, size);
     }
 }
 
 static void fossil_algorithm_shuffle_block(void *base, size_t count, size_t size, uint64_t seed)
 {
     if (count < 2) return;
-
+    size_t block = count < 8 ? 2 : count / 8;
     unsigned char *data = (unsigned char *)base;
-    size_t block_size = (count < 16) ? 1 : 16; // AI-inspired heuristic
-    srand((unsigned int)(seed & 0xFFFFFFFFULL));
-
-    // shuffle blocks
-    for (size_t i = count - 1; i > 0; i -= block_size)
+    uint64_t state = seed;
+    for (size_t end = count; end > 0; )
     {
-        size_t j = (size_t)(rand() % ((i / block_size) + 1)) * block_size;
-        fossil_algorithm_shuffle_swap(data + i * size, data + j * size, block_size * size);
-    }
-
-    // then shuffle elements inside each block
-    for (size_t b = 0; b < count; b += block_size)
-    {
-        size_t end = (b + block_size > count) ? count : b + block_size;
-        for (size_t i = b + 1; i < end; ++i)
-        {
-            size_t j = b + (size_t)(rand() % (i - b + 1));
-            fossil_algorithm_shuffle_swap(data + i * size, data + j * size, size);
-        }
+        size_t start = end > block ? end - block : 0;
+        size_t target = fossil_algorithm_shuffle_bounded(&state, end - start + start);
+        if (target != start)
+            for (size_t i = 0; i < end - start && target + i < count; ++i)
+                fossil_algorithm_shuffle_swap(data + (start + i) * size,
+                                               data + (target + i) * size, size);
+        end = start;
     }
 }
 
@@ -151,11 +234,11 @@ static void fossil_algorithm_shuffle_sattolo(void *base, size_t count, size_t si
     if (count < 2) return;
 
     unsigned char *data = (unsigned char *)base;
-    srand((unsigned int)(seed & 0xFFFFFFFFULL));
+    uint64_t state = seed;
 
     for (size_t i = count - 1; i > 0; --i)
     {
-        size_t j = (size_t)(rand() % i); // note: % i, not % (i+1)
+        size_t j = fossil_algorithm_shuffle_bounded(&state, i);
         fossil_algorithm_shuffle_swap(data + i * size, data + j * size, size);
     }
 }
@@ -182,19 +265,50 @@ int fossil_algorithm_shuffle_exec(
     const char *algo = algorithm_id ? algorithm_id : "auto";
     uint64_t final_seed = fossil_algorithm_shuffle_rand_seed(seed, mode_id);
 
-    // Algorithm selection
+    // AI-inspired auto selection
     if (strcmp(algo, "auto") == 0) {
+        /* Small arrays favor the low-overhead inside-out variant. */
         if (count < 32) {
             fossil_algorithm_shuffle_inside_out(base, count, size, final_seed);
-        } else if (size > 16) {
+        } else if (strcmp(type_id, "u8") == 0 || strcmp(type_id, "i8") == 0) {
+            /* Byte-sized values are efficiently mixed in blocks. */
             fossil_algorithm_shuffle_block(base, count, size, final_seed);
-        } else if (!strcmp(type_id, "cstr") || !strcmp(type_id, "any")) {
-            fossil_algorithm_shuffle_sattolo(base, count, size, final_seed);
+        } else if (strcmp(type_id, "u32") == 0 || strcmp(type_id, "i32") == 0) {
+            /* Fixed-width integers use the Knuth/Fisher-Yates strategy. */
+            fossil_algorithm_shuffle_knuth(base, count, size, final_seed);
+        } else if (strcmp(type_id, "f32") == 0 || strcmp(type_id, "f64") == 0) {
+            /* Floating-point data uses a generic riffle strategy. */
+            fossil_algorithm_shuffle_riffle(base, count, size, final_seed);
         } else {
+            /* General-purpose unbiased fallback. */
             fossil_algorithm_shuffle_fisher_yates(base, count, size, final_seed);
         }
         return 0;
     }
 
-    return -3; // unknown algorithm
+    // Specific algorithm selection
+    if (strcmp(algo, "fisher_yates") == 0) {
+        fossil_algorithm_shuffle_fisher_yates(base, count, size, final_seed);
+    } else if (strcmp(algo, "inside_out") == 0) {
+        fossil_algorithm_shuffle_inside_out(base, count, size, final_seed);
+    } else if (strcmp(algo, "knuth") == 0) {
+        fossil_algorithm_shuffle_knuth(base, count, size, final_seed);
+    } else if (strcmp(algo, "transposition") == 0) {
+        fossil_algorithm_shuffle_transposition(base, count, size, final_seed);
+    } else if (strcmp(algo, "riffle") == 0) {
+        fossil_algorithm_shuffle_riffle(base, count, size, final_seed);
+    } else if (strcmp(algo, "overhand") == 0) {
+        fossil_algorithm_shuffle_overhand(base, count, size, final_seed);
+    } else if (strcmp(algo, "permutation") == 0) {
+        fossil_algorithm_shuffle_permutation(base, count, size, final_seed);
+    } else if (strcmp(algo, "derangement") == 0) {
+        fossil_algorithm_shuffle_derangement(base, count, size, final_seed);
+    } else if (strcmp(algo, "block") == 0) {
+        fossil_algorithm_shuffle_block(base, count, size, final_seed);
+    } else if (strcmp(algo, "sattolo") == 0) {
+        fossil_algorithm_shuffle_sattolo(base, count, size, final_seed);
+    } else {
+        return -3; // unknown algorithm
+    }
+    return 0;
 }

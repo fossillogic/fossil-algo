@@ -50,7 +50,7 @@ FOSSIL_TEARDOWN(c_algorithm_shuffle_fixture) {
 FOSSIL_TEST(c_test_shuffle_exec_fisher_yates_i32) {
     int arr[] = {1, 2, 3, 4, 5};
     int orig[] = {1, 2, 3, 4, 5};
-    int status = fossil_algorithm_shuffle_exec(arr, 5, "i32", "fisher-yates", "auto", 0);
+    int status = fossil_algorithm_shuffle_exec(arr, 5, "i32", "fisher_yates", "auto", 0);
     ASSUME_ITS_EQUAL_I32(status, 0);
     // At least one element should be different after shuffle
     bool changed = false;
@@ -66,7 +66,7 @@ FOSSIL_TEST(c_test_shuffle_exec_fisher_yates_i32) {
 FOSSIL_TEST(c_test_shuffle_exec_inside_out_f64) {
     double arr[] = {1.1, 2.2, 3.3, 4.4};
     double orig[] = {1.1, 2.2, 3.3, 4.4};
-    int status = fossil_algorithm_shuffle_exec(arr, 4, "f64", "inside-out", "auto", 0);
+    int status = fossil_algorithm_shuffle_exec(arr, 4, "f64", "inside_out", "auto", 0);
     ASSUME_ITS_EQUAL_I32(status, 0);
     bool changed = false;
     for (int i = 0; i < 4; ++i) {

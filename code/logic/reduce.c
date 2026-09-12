@@ -123,6 +123,21 @@ static void reduce_min(void *accum, const void *elem, const char *type_id)
     } else if (strcmp(type_id, "i64") == 0) {
         int64_t v = *(const int64_t*)elem;
         if (v < *(int64_t*)accum) *(int64_t*)accum = v;
+    } else if (strcmp(type_id, "u8") == 0) {
+        uint8_t v = *(const uint8_t*)elem;
+        if (v < *(uint8_t*)accum) *(uint8_t*)accum = v;
+    } else if (strcmp(type_id, "u16") == 0) {
+        uint16_t v = *(const uint16_t*)elem;
+        if (v < *(uint16_t*)accum) *(uint16_t*)accum = v;
+    } else if (strcmp(type_id, "u32") == 0) {
+        uint32_t v = *(const uint32_t*)elem;
+        if (v < *(uint32_t*)accum) *(uint32_t*)accum = v;
+    } else if (strcmp(type_id, "u64") == 0) {
+        uint64_t v = *(const uint64_t*)elem;
+        if (v < *(uint64_t*)accum) *(uint64_t*)accum = v;
+    } else if (strcmp(type_id, "size") == 0) {
+        size_t v = *(const size_t*)elem;
+        if (v < *(size_t*)accum) *(size_t*)accum = v;
     } else if (strcmp(type_id, "f32") == 0) {
         float v = *(const float*)elem;
         if (v < *(float*)accum) *(float*)accum = v;
@@ -147,6 +162,21 @@ static void reduce_max(void *accum, const void *elem, const char *type_id)
     } else if (strcmp(type_id, "i64") == 0) {
         int64_t v = *(const int64_t*)elem;
         if (v > *(int64_t*)accum) *(int64_t*)accum = v;
+    } else if (strcmp(type_id, "u8") == 0) {
+        uint8_t v = *(const uint8_t*)elem;
+        if (v > *(uint8_t*)accum) *(uint8_t*)accum = v;
+    } else if (strcmp(type_id, "u16") == 0) {
+        uint16_t v = *(const uint16_t*)elem;
+        if (v > *(uint16_t*)accum) *(uint16_t*)accum = v;
+    } else if (strcmp(type_id, "u32") == 0) {
+        uint32_t v = *(const uint32_t*)elem;
+        if (v > *(uint32_t*)accum) *(uint32_t*)accum = v;
+    } else if (strcmp(type_id, "u64") == 0) {
+        uint64_t v = *(const uint64_t*)elem;
+        if (v > *(uint64_t*)accum) *(uint64_t*)accum = v;
+    } else if (strcmp(type_id, "size") == 0) {
+        size_t v = *(const size_t*)elem;
+        if (v > *(size_t*)accum) *(size_t*)accum = v;
     } else if (strcmp(type_id, "f32") == 0) {
         float v = *(const float*)elem;
         if (v > *(float*)accum) *(float*)accum = v;
@@ -200,6 +230,11 @@ int fossil_algorithm_reduce_exec(
         else if (strcmp(type_id, "i16") == 0) *(int16_t*)out_result = INT16_MAX;
         else if (strcmp(type_id, "i32") == 0) *(int32_t*)out_result = INT32_MAX;
         else if (strcmp(type_id, "i64") == 0) *(int64_t*)out_result = INT64_MAX;
+        else if (strcmp(type_id, "u8") == 0) *(uint8_t*)out_result = UINT8_MAX;
+        else if (strcmp(type_id, "u16") == 0) *(uint16_t*)out_result = UINT16_MAX;
+        else if (strcmp(type_id, "u32") == 0) *(uint32_t*)out_result = UINT32_MAX;
+        else if (strcmp(type_id, "u64") == 0) *(uint64_t*)out_result = UINT64_MAX;
+        else if (strcmp(type_id, "size") == 0) *(size_t*)out_result = SIZE_MAX;
         else if (strcmp(type_id, "f32") == 0) *(float*)out_result = FLT_MAX;
         else if (strcmp(type_id, "f64") == 0) *(double*)out_result = DBL_MAX;
     } else if (strcmp(op_id, "max") == 0) {
@@ -207,6 +242,11 @@ int fossil_algorithm_reduce_exec(
         else if (strcmp(type_id, "i16") == 0) *(int16_t*)out_result = INT16_MIN;
         else if (strcmp(type_id, "i32") == 0) *(int32_t*)out_result = INT32_MIN;
         else if (strcmp(type_id, "i64") == 0) *(int64_t*)out_result = INT64_MIN;
+        else if (strcmp(type_id, "u8") == 0) *(uint8_t*)out_result = 0;
+        else if (strcmp(type_id, "u16") == 0) *(uint16_t*)out_result = 0;
+        else if (strcmp(type_id, "u32") == 0) *(uint32_t*)out_result = 0;
+        else if (strcmp(type_id, "u64") == 0) *(uint64_t*)out_result = 0;
+        else if (strcmp(type_id, "size") == 0) *(size_t*)out_result = 0;
         else if (strcmp(type_id, "f32") == 0) *(float*)out_result = -FLT_MAX;
         else if (strcmp(type_id, "f64") == 0) *(double*)out_result = -DBL_MAX;
     } else if (strcmp(op_id, "any") == 0) {

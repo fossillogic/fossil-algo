@@ -54,7 +54,10 @@ extern "C" {
  * @param base Pointer to the array to shuffle.
  * @param count Number of elements in the array.
  * @param type_id String identifier for data type (e.g., "i32", "f64", "cstr").
- * @param algorithm_id String identifier for shuffle algorithm ("auto", "fisher-yates", "inside-out", etc.).
+ * @param algorithm_id String identifier for the shuffle algorithm. Supported
+ *   values are "auto", "fisher_yates", "inside_out", "knuth",
+ *   "transposition", "riffle", "overhand", "permutation",
+ *   "derangement", "block", and "sattolo".
  * @param mode_id String identifier for shuffle mode ("auto", "seeded", "secure").
  * @param seed Optional seed value (ignored if mode is "auto" or "secure").
  * @return int Status code:
@@ -121,7 +124,10 @@ namespace fossil {
              * @param base Pointer to the array to shuffle.
              * @param count Number of elements in the array.
              * @param type_id String identifier for data type (e.g., "i32", "f64", "cstr").
-             * @param algorithm_id String identifier for shuffle algorithm ("auto", "fisher-yates", "inside-out", etc.).
+             * @param algorithm_id String identifier for the shuffle algorithm.
+             * Supported values are "auto", "fisher_yates", "inside_out",
+             * "knuth", "transposition", "riffle", "overhand",
+             * "permutation", "derangement", "block", and "sattolo".
              * @param mode_id String identifier for shuffle mode ("auto", "seeded", "secure").
              * @param seed Optional seed value (ignored if mode is "auto" or "secure").
              * @return int Status code (0 on success, negative on error).
